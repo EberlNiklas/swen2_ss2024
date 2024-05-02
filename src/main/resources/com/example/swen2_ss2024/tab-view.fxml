@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+    <VBox xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.example.swen2_ss2024.view.TabView">
+        <TabPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
+            <tabs>
+                <Tab text="General" closable="false">
+                    <!-- General content -->
+                    <ListView fx:id="GeneralContent">
+                        <!---->
+                    </ListView>
+                </Tab>
+                <Tab text="Route" closable="false">
+                    <!-- Route content -->
+                    <ListView fx:id="RouteContent">
+                        <!---->
+                    </ListView>
+                </Tab>
+                <Tab text="Misc" closable="false">
+                    <!-- Misc content -->
+                    <ListView fx:id="MiscContent">
+                        <!---->
+                    </ListView>
+                </Tab>
+
+            </tabs>
+
+        </TabPane>
+    </VBox>
+

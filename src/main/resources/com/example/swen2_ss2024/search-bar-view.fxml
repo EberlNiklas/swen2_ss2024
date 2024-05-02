@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+    <HBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.example.swen2_ss2024.view.SearchBarView">
+        <BorderPane.margin>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </BorderPane.margin>
+        <children>
+            <StackPane HBox.hgrow="ALWAYS">
+                <children>
+                    <TextField promptText="Search" fx:id="searchField"/>
+                    <Button>
+                        <ImageView fitHeight="24" fitWidth="24" StackPane.alignment="CENTER_RIGHT">
+                            <!-- Icon -->
+                            <Image url="https://img.icons8.com/color/48/search--v1.png"/>
+                        </ImageView>
+                    </Button>
+                </children>
+            </StackPane>
+        </children>
+    </HBox>
+

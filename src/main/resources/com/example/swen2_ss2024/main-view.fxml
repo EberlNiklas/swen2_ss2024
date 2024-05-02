@@ -14,80 +14,16 @@
     <top>
         <VBox spacing="10">
             <Label text="Tour Planner"/>
-            <HBox>
-                <MenuBar HBox.hgrow="ALWAYS">
-                    <menus>
-                        <Menu text="File">
-                            <items>
-                                <MenuItem text="Open"/>
-                                <MenuItem text="Save"/>
-                                <MenuItem text="Delete"/>
-                            </items>
-                        </Menu>
-                        <Menu text="Edit">
-                            <!-- For later -->
-                        </Menu>
-                        <Menu text="Options">
-                            <!-- For later -->
-                        </Menu>
-                    </menus>
-                </MenuBar>
-                <MenuBar>
-                    <menus>
-                        <Menu text="Help">
-                            <!-- For later -->
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </HBox>
+            <fx:include source="menu-view.fxml"/>
 
             <!-- Search Bar -->
-            <HBox HBox.hgrow="ALWAYS">
-                <BorderPane.margin>
-                    <Insets top="10" right="10" bottom="10" left="10"/>
-                </BorderPane.margin>
-                <children>
-                    <StackPane HBox.hgrow="ALWAYS">
-                        <children>
-                            <TextField promptText="Search" fx:id="tourNameField"/>
-                            <ImageView fitHeight="24" fitWidth="24" StackPane.alignment="CENTER_RIGHT">
-                                <!-- Icon -->
-                                <Image url="https://img.icons8.com/color/48/search--v1.png"/>
-                            </ImageView>
-                        </children>
-                    </StackPane>
-                </children>
-            </HBox>
+            <fx:include source="search-bar-view.fxml"/>
         </VBox>
     </top>
 
     <!-- Left Section for Tours -->
     <left>
-        <BorderPane>
-            <center>
-                <VBox VBox.vgrow="ALWAYS">
-                    <BorderPane.margin>
-                        <Insets top="10" right="2" bottom="10" left="5"/>
-                    </BorderPane.margin>
-                    <children>
-                        <VBox VBox.vgrow="ALWAYS">
-                            <HBox alignment="CENTER_LEFT" style="-fx-background-color: rgba(0, 0, 255, 0.2);">
-                                <Label text="Tours"/>
-                                <Region HBox.hgrow="ALWAYS"/>
-                                <HBox alignment="CENTER_RIGHT" spacing="2">
-                                    <Button text="+" style="-fx-background-color: blue; -fx-text-fill: white;"/>
-                                    <Button text="-" style="-fx-background-color: blue; -fx-text-fill: white;"/>
-                                    <Button text="..." style="-fx-background-color: blue; -fx-text-fill: white;"/>
-                                </HBox>
-                            </HBox>
-                            <ListView fx:id="tourList" VBox.vgrow="ALWAYS">
-                                <!-- List of tours -->
-                            </ListView>
-                        </VBox>
-                    </children>
-                </VBox>
-            </center>
-        </BorderPane>
+        <fx:include source="tour-view.fxml"/>
     </left>
 
 
@@ -99,48 +35,9 @@
             </BorderPane.margin>
             <children>
 
-                <VBox>
-                    <TabPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
-                        <tabs>
-                            <Tab text="General" closable="false">
-                                <!-- General content -->
-                                <ListView fx:id="GeneralContent">
-                                    <!---->
-                                </ListView>
-                            </Tab>
-                            <Tab text="Route" closable="false">
-                                <!-- Route content -->
-                                <ListView fx:id="RouteContent">
-                                    <!---->
-                                </ListView>
-                            </Tab>
-                            <Tab text="Misc" closable="false">
-                                <!-- Misc content -->
-                                <ListView fx:id="MiscContent">
-                                    <!---->
-                                </ListView>
-                            </Tab>
+                <fx:include source="tab-view.fxml"/>
 
-                        </tabs>
-
-                    </TabPane>
-                </VBox>
-
-                <VBox>
-                    <HBox alignment="CENTER_LEFT" style="-fx-background-color: rgba(0, 0, 255, 0.2);">
-
-                        <Label text="Tour Logs"/>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <HBox alignment="CENTER_RIGHT" spacing="5">
-                            <Button text="+" style="-fx-background-color: blue; -fx-text-fill: white;"/>
-                            <Button text="-" style="-fx-background-color: blue; -fx-text-fill: white;"/>
-                            <Button text="..." style="-fx-background-color: blue; -fx-text-fill: white;"/>
-                        </HBox>
-                    </HBox>
-                    <ListView fx:id="tourLogList">
-                        <!-- List of tour logs -->
-                    </ListView>
-                </VBox>
+                <fx:include source="tour-logs-view.fxml"/>
             </children>
         </VBox>
     </center>

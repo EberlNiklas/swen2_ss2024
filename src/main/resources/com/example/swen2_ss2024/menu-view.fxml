@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+    <HBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.swen2_ss2024.view.MenuView">
+        <MenuBar prefHeight="25.0" HBox.hgrow="ALWAYS">
+            <menus>
+                <Menu text="File">
+                    <items>
+                        <MenuItem text="Open" />
+                        <MenuItem text="Save" />
+                        <MenuItem text="Delete" />
+                    </items>
+                </Menu>
+                <Menu text="Edit">
+                    <!-- For later -->
+                </Menu>
+                <Menu text="Options">
+                    <!-- For later -->
+                </Menu>
+            </menus>
+        </MenuBar>
+        <MenuBar>
+            <menus>
+                <Menu text="Help">
+                    <!-- For later -->
+                </Menu>
+            </menus>
+        </MenuBar>
+    </HBox>
+
+
