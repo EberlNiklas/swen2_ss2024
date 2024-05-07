@@ -7,22 +7,21 @@
 <?import javafx.scene.layout.*?>
 
 
-    <VBox xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="com.example.swen2_ss2024.view.TourLogsView">
-        <HBox alignment="CENTER_LEFT" style="-fx-background-color: rgba(0, 0, 255, 0.2);">
-
-            <Label text="Tour Logs"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <HBox alignment="CENTER_RIGHT" spacing="5">
-                <Button text="+" style="-fx-background-color: blue; -fx-text-fill: white;"/>
-                <Button text="-" style="-fx-background-color: blue; -fx-text-fill: white;"/>
-                <Button text="..." style="-fx-background-color: blue; -fx-text-fill: white;"/>
-            </HBox>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.swen2_ss2024.view.TourLogsView">
+    <HBox alignment="CENTER_LEFT" style="-fx-background-color: rgba(0, 0, 255, 0.2);">
+        <Label text="Tour Logs"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <HBox alignment="CENTER_RIGHT" spacing="5">
+            <Button text="Add" onAction="#handleAddTourLog"/>
+            <Button text="Edit" onAction="#handleEditTourLog"/>
+            <Button text="Delete" onAction="#handleDeleteTourLog"/>
         </HBox>
-        <ListView fx:id="tourLogList">
-            <!-- List of tour logs -->
-        </ListView>
-    </VBox>
+    </HBox>
+    <ListView fx:id="tourLogList">
+        <!-- List of tour logs -->
+    </ListView>
+</VBox>
 
 

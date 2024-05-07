@@ -52,6 +52,7 @@ public class ViewFactory {
         }
 
         if (TourLogsView.class == viewClass) {
+            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel();
             return new TourLogsView(tourLogsViewModel);
         }
 
@@ -62,9 +63,7 @@ public class ViewFactory {
             return new TourPlannerController();
         }
 
-
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
     }
-
 
 }

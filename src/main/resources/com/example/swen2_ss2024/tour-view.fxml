@@ -22,14 +22,15 @@
                             <Label text="Tours"/>
                             <Region HBox.hgrow="ALWAYS"/>
                             <HBox alignment="CENTER_RIGHT" spacing="2">
-                                <Button text="+" style="-fx-background-color: blue; -fx-text-fill: white;" onAction="#handleAddTour"/>
-                                <Button text="-" style="-fx-background-color: blue; -fx-text-fill: white;" onAction="#handleRemoveTour"/>
-                                <Button text="..." style="-fx-background-color: blue; -fx-text-fill: white;" onAction="#handleMoreOptions"/>
+                                <Button text="Add" onAction="#handleAddTour"/>
+                                <Button text="Edit" onAction="#handleMoreOptions"/>
+                                <Button text="Delete" onAction="#handleRemoveTour"/>
                             </HBox>
                         </HBox>
                         <ListView fx:id="tourList" VBox.vgrow="ALWAYS">
                             <!-- List of tours -->
                         </ListView>
+                        -
                     </VBox>
                 </children>
             </VBox>
