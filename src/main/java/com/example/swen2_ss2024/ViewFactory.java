@@ -58,7 +58,13 @@ public class ViewFactory {
         if (TourView.class == viewClass) {
             return new TourView(tourViewModel);
         }
+        if (viewClass == TourPlannerController.class) {
+            return new TourPlannerController();
+        }
+
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
     }
+
+
 }
