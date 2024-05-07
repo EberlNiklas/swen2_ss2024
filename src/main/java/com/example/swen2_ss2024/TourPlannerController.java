@@ -23,7 +23,7 @@ public class TourPlannerController {
     @FXML
     protected void handleAddTour() {
         // Placeholder to see if the tour gets added to the list
-        Tour newTour = new Tour("1", "Mystery Tour", "Test");
+        Tour newTour = new Tour("Mystery Tour", "Test");
         tours.add(newTour);
     }
 
