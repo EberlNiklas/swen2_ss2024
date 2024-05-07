@@ -19,13 +19,8 @@
         <children>
             <StackPane HBox.hgrow="ALWAYS">
                 <children>
-                    <TextField promptText="Search" fx:id="searchField"/>
-                    <Button>
-                        <ImageView fitHeight="24" fitWidth="24" StackPane.alignment="CENTER_RIGHT">
-                            <!-- Icon -->
-                            <Image url="https://img.icons8.com/color/48/search--v1.png"/>
-                        </ImageView>
-                    </Button>
+                    <TextField promptText="Search" fx:id="searchField" onAction="#onSearch"/>
+                    <Button fx:id="searchButton" onAction="#onSearch" text="%search-button-text"/>
                 </children>
             </StackPane>
         </children>

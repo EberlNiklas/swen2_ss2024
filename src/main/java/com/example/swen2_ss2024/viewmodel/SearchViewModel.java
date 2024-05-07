@@ -36,7 +36,19 @@ public class SearchViewModel {
         return searchText;
     }
 
-    public BooleanProperty disableSearchProperty() {
+    public String getSearchText() {
+        return searchText.get();
+    }
+
+    public BooleanProperty searchDisabledProperty() {
         return disableSearch;
+    }
+
+    public boolean getSearchDisabled() {
+        return disableSearch.get();
+    }
+
+    public boolean isSearchDisabled() {
+        return disableSearch.get();
     }
 }
