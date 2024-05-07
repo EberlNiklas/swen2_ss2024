@@ -1,8 +1,8 @@
 package com.example.swen2_ss2024;
 
 import com.example.swen2_ss2024.event.Publisher;
-import com.example.swen2_ss2024.view.SearchBarView;
-import com.example.swen2_ss2024.viewmodel.SearchViewModel;
+import com.example.swen2_ss2024.view.*;
+import com.example.swen2_ss2024.viewmodel.*;
 
 public class ViewFactory {
 
@@ -12,10 +12,22 @@ public class ViewFactory {
 
     private final SearchViewModel searchViewModel;
 
+    private final MenuViewModel menuViewModel;
+
+    private final TabViewModel tabViewModel;
+
+    private final TourLogsViewModel tourLogsViewModel;
+
+    private final TourViewModel tourViewModel;
+
     private ViewFactory() {
         publisher = new Publisher();
 
         searchViewModel = new SearchViewModel(publisher);
+        menuViewModel = new MenuViewModel();
+        tabViewModel = new TabViewModel();
+        tourLogsViewModel = new TourLogsViewModel();
+        tourViewModel = new TourViewModel();
     }
 
     public static ViewFactory getInstance() {
@@ -29,6 +41,22 @@ public class ViewFactory {
     public Object create(Class<?> viewClass) {
         if (SearchBarView.class == viewClass) {
             return new SearchBarView(searchViewModel);
+        }
+
+        if (MenuView.class == viewClass) {
+            return new MenuView(menuViewModel);
+        }
+
+        if (TabView.class == viewClass) {
+            return new TabView(tabViewModel);
+        }
+
+        if (TourLogsView.class == viewClass) {
+            return new TourLogsView(tourLogsViewModel);
+        }
+
+        if (TourView.class == viewClass) {
+            return new TourView(tourViewModel);
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
