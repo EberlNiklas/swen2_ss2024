@@ -8,33 +8,30 @@
 
 <?import javafx.geometry.Insets?>
 
-    <BorderPane xmlns="http://javafx.com/javafx"
-                xmlns:fx="http://javafx.com/fxml"
-                fx:controller="com.example.swen2_ss2024.TourPlannerController">
-        <center>
-            <VBox VBox.vgrow="ALWAYS">
-                <BorderPane.margin>
-                    <Insets top="10" right="2" bottom="10" left="5"/>
-                </BorderPane.margin>
-                <children>
-                    <VBox VBox.vgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT" style="-fx-background-color: rgba(0, 0, 255, 0.2);">
-                            <Label text="Tours"/>
-                            <Region HBox.hgrow="ALWAYS"/>
-                            <HBox alignment="CENTER_RIGHT" spacing="2">
-                                <Button text="Add" onAction="#handleAddTour"/>
-                                <Button text="Edit" onAction="#handleMoreOptions"/>
-                                <Button text="Delete" onAction="#handleRemoveTour"/>
-                            </HBox>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.swen2_ss2024.TourPlannerController">
+    <center>
+        <VBox VBox.vgrow="ALWAYS">
+            <BorderPane.margin>
+                <Insets top="10" right="2" bottom="10" left="5"/>
+            </BorderPane.margin>
+            <children>
+                <VBox VBox.vgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" style="-fx-background-color: rgba(0, 0, 255, 0.2);">
+                        <Label text="Tours"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <HBox alignment="CENTER_RIGHT" spacing="2">
+                            <Button text="Add" onAction="#handleAddTour"/>
+                            <Button text="Edit" onAction="#handleMoreOptions"/>
+                            <Button text="Delete" onAction="#handleRemoveTour"/>
                         </HBox>
-                        <ListView fx:id="tourList" VBox.vgrow="ALWAYS">
-                            <!-- List of tours -->
-                        </ListView>
-                        -
-                    </VBox>
-                </children>
-            </VBox>
-        </center>
-    </BorderPane>
-
-
+                    </HBox>
+                    <ListView fx:id="tourList" VBox.vgrow="ALWAYS">
+                        <!-- List of tours -->
+                    </ListView>
+                </VBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
