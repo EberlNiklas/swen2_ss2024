@@ -10,7 +10,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.swen2_ss2024.TourPlannerController">
+            fx:controller="com.example.swen2_ss2024.view.TourView">
     <center>
         <VBox VBox.vgrow="ALWAYS">
             <BorderPane.margin>
@@ -22,9 +22,9 @@
                         <Label text="Tours"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <HBox alignment="CENTER_RIGHT" spacing="2">
-                            <Button text="Add" onAction="#handleAddTour"/>
-                            <Button text="Edit" onAction="#handleMoreOptions"/>
-                            <Button text="Delete" onAction="#handleRemoveTour"/>
+                            <Button fx:id="buttonAdd" text= "%add-button-text" />
+                            <Button fx:id="buttonDelete" text="Delete" />
+                            <Button fx:id="buttonMore" text="More" />
                         </HBox>
                     </HBox>
                     <ListView fx:id="tourList" VBox.vgrow="ALWAYS">

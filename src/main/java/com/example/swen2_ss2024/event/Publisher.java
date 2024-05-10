@@ -8,9 +8,11 @@ import java.util.Map;
 public class Publisher {
 
     private final Map<Event, List<Subscriber>> subscriberMap;
+    private final Map<Event, List<ObjectSubscriber>> objectSubscriberMap;
 
     public Publisher() {
         subscriberMap = new HashMap<>();
+        objectSubscriberMap = new HashMap<>();
     }
 
     // subscribe(event, subscriber)
@@ -24,6 +26,19 @@ public class Publisher {
         subscribers.add(subscriber);
 
         subscriberMap.put(event, subscribers);
+        System.out.println("Subscriber added for event: " + event);
+    }
+    public void subscribe(Event event, ObjectSubscriber objectSubscriber) {
+        List<ObjectSubscriber> objectSubscribers = objectSubscriberMap.get(event);
+
+        if (null == objectSubscribers) {
+            objectSubscribers = new ArrayList<>();
+        }
+
+        objectSubscribers.add(objectSubscriber);
+
+        objectSubscriberMap.put(event, objectSubscribers);
+        System.out.println("ObjectSubscriber added for event: " + event);
     }
 
     // publish(event, message)
@@ -39,4 +54,17 @@ public class Publisher {
             subscriber.notify(message);
         }
     }
+    public void publish(Event event, Object message) {
+        List<ObjectSubscriber> subscribers = objectSubscriberMap.get(event);
+
+        if (null == subscribers) {
+            // TODO: Log this event
+            return;
+        }
+
+        for (ObjectSubscriber subscriber: subscribers) {
+            subscriber.notify(message); // Pass the message when notifying subscribers
+        }
+    }
+
 }

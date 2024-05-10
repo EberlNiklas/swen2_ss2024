@@ -4,15 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>swen2_ss2024</artifactId>
+    <groupId>at.technikum</groupId>
+    <artifactId>first-ui</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>swen2_ss2024</name>
+    <name>first-ui</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.9.2</junit.version>
-    </properties>
+        <junit.version>5.9.2</junit.version>  </properties>
 
     <dependencies>
         <dependency>
@@ -38,6 +37,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.16.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -60,7 +64,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.swen2_ss2024/com.example.swen2_ss2024.TourPlannerApplication</mainClass>
+                            <mainClass>com.example.swen2_ss2024.TourPlannerApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

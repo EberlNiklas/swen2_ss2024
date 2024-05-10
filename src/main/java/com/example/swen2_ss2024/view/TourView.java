@@ -1,21 +1,27 @@
 package com.example.swen2_ss2024.view;
 
 import com.example.swen2_ss2024.viewmodel.TourViewModel;
-import javafx.fxml.Initializable;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
-public class TourView implements Initializable {
+public class TourView  {
 
-    private final TourViewModel tourViewModel;
+    @FXML
+    private Button buttonAdd;
+    @FXML private Button buttonDelete;
+    @FXML private Button buttonMore;
 
-    public TourView (TourViewModel tourViewModel){
-        this.tourViewModel = tourViewModel;
+    private final TourViewModel viewModel;
+
+    public TourView(TourViewModel tourViewModel) {
+        this.viewModel = tourViewModel;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
+    @FXML
+    public void initialize() {
+        buttonAdd.setOnAction(e -> viewModel.onAdd());
+        buttonDelete.setOnAction(e -> viewModel.onDelete());
+        buttonMore.setOnAction(e -> viewModel.onMore());
     }
 }

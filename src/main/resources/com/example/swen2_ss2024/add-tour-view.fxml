@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.swen2_ss2024.view.AddTourView">
+
+    <TextField fx:id="nameField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Name" />
+    <TextField fx:id="descriptionField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Description" />
+    <TextField fx:id="fromField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="From" />
+    <TextField fx:id="toField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="To" />
+    <TextField fx:id="transportTypeField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Transport Type" />
+    <TextField fx:id="distanceField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Distance" />
+    <TextField fx:id="estimatedTimeField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Estimated Time" />
+    <Button fx:id="addTourButton" onAction="#addTour" text="Add" />
+
+
+</VBox>
