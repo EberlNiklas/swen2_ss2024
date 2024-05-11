@@ -22,6 +22,7 @@ public class AddTourViewModel {
     private final StringProperty transportType = new SimpleStringProperty("");
     private final StringProperty distance = new SimpleStringProperty("");
     private final StringProperty estimatedTime = new SimpleStringProperty("");
+    private final StringProperty imagePath = new SimpleStringProperty("");
 
     private final BooleanProperty addTourButtonDisabled = new SimpleBooleanProperty(true);
 
@@ -39,20 +40,32 @@ public class AddTourViewModel {
         transportType.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         distance.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         estimatedTime.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        imagePath.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        // Ensure initial state checks
+        updateAddTourButtonDisabled();
     }
 
+
+
     private void updateAddTourButtonDisabled() {
-        // Checks if any of the fields are empty
-        addTourButtonDisabled.set(name.get().isEmpty() || description.get().isEmpty() ||
+        boolean anyFieldEmpty = name.get().isEmpty() || description.get().isEmpty() ||
                 from.get().isEmpty() || to.get().isEmpty() ||
                 transportType.get().isEmpty() || distance.get().isEmpty() ||
-                estimatedTime.get().isEmpty());
+                estimatedTime.get().isEmpty() || imagePath.get().isEmpty();
+
+        System.out.println("Fields Empty: " + anyFieldEmpty); // Debug output
+        System.out.println("Image Path: " + imagePath.get()); // Additional debug for image path
+        addTourButtonDisabled.set(anyFieldEmpty);
     }
+
 
     public void addTour() {
         if (!addTourButtonDisabled.get()) {
             System.out.println("Adding tour Button works");
-            Tour tour = new Tour(name.get(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get());
+            Tour tour = new Tour(
+                    name.get(), description.get(), from.get(), to.get(),
+                    transportType.get(), distance.get(), estimatedTime.get(), imagePath.get()
+            );
             tourListService.addTour(tour);
             publisher.publish(Event.TOUR_ADDED, tour);
 
@@ -64,6 +77,7 @@ public class AddTourViewModel {
             transportType.set("");
             distance.set("");
             estimatedTime.set("");
+            imagePath.set("");
         }
     }
 
@@ -101,5 +115,10 @@ public class AddTourViewModel {
     public BooleanProperty addTourButtonDisabledProperty() {
         return addTourButtonDisabled;
     }
+
+    public StringProperty imagePathProperty() {
+        return imagePath;
+    }
+
 }
 

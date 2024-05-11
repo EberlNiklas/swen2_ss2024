@@ -7,9 +7,10 @@
 <?import javafx.scene.layout.*?>
 
 
-    <VBox xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="com.example.swen2_ss2024.view.TabView">
+<?import javafx.scene.image.ImageView?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.swen2_ss2024.view.TabView">
         <TabPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
             <tabs>
                 <Tab text="General" closable="false">
@@ -19,10 +20,12 @@
                     </ListView>
                 </Tab>
                 <Tab text="Route" closable="false">
-                    <!-- Route content -->
-                    <ListView fx:id="RouteContent">
-                        <!---->
-                    </ListView>
+                    <VBox>
+                        <ImageView fx:id="routeImageView" />
+                        <ListView fx:id="RouteContent">
+                            <!-- Existing content -->
+                        </ListView>
+                    </VBox>
                 </Tab>
                 <Tab text="Misc" closable="false">
                     <!-- Misc content -->

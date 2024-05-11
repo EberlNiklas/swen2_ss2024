@@ -11,8 +11,9 @@ public class Tour {
     private final StringProperty transportType = new SimpleStringProperty(this, "transportType");
     private final StringProperty distance = new SimpleStringProperty(this, "distance");
     private final StringProperty estimatedTime = new SimpleStringProperty(this, "estimatedTime");
+    private final StringProperty imagePath = new SimpleStringProperty(this, "imagePath");
 
-    public Tour(String name, String description, String from, String to, String transportType, String distance, String estimatedTime) {
+    public Tour(String name, String description, String from, String to, String transportType, String distance, String estimatedTime, String imagePath) {
         this.name.set(name);
         this.description.set(description);
         this.from.set(from);
@@ -20,6 +21,7 @@ public class Tour {
         this.transportType.set(transportType);
         this.distance.set(distance);
         this.estimatedTime.set(estimatedTime);
+        this.imagePath.set(imagePath);
     }
 
     // Property getters
@@ -107,5 +109,16 @@ public class Tour {
 
     public void setEstimatedTime(String estimatedTime) {
         this.estimatedTime.set(estimatedTime);
+    }
+    public String getImagePath() {
+        return imagePath.get();
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath.set(imagePath);
+    }
+
+    public StringProperty imagePathProperty() {
+        return imagePath;
     }
 }

@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.swen2_ss2024.view.EditTourView">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.swen2_ss2024.view.EditTourView">
     <children>
         <TextField fx:id="nameField" HBox.hgrow="ALWAYS" promptText="Name" />
         <TextField fx:id="descriptionField" HBox.hgrow="ALWAYS" promptText="Description" />
@@ -12,6 +12,7 @@
         <TextField fx:id="transportTypeField" HBox.hgrow="ALWAYS" promptText="Transport Type" />
         <TextField fx:id="distanceField" HBox.hgrow="ALWAYS" promptText="Distance" />
         <TextField fx:id="estimatedTimeField" HBox.hgrow="ALWAYS" promptText="Estimated Time" />
+        <TextField fx:id="imagePathField" HBox.hgrow="ALWAYS" promptText="Image Path" />
         <Button fx:id="editTourButton" onAction="#handleEditTour" text="Edit" />
     </children>
     <padding>

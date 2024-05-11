@@ -5,5 +5,6 @@ public enum Event {
     TOUR_ADDED,
     TOUR_SELECTED,
     TOUR_DELETED,
+    IMAGE_PATH_UPDATED,
     TOUR_UPDATED;
 }

@@ -37,6 +37,8 @@ public class AddTourView implements Initializable{
 
     @FXML
     private Button addTourButton;
+    @FXML
+    private TextField imagePathField;
 
 
 
@@ -55,6 +57,7 @@ public class AddTourView implements Initializable{
         transportTypeField.textProperty().bindBidirectional(viewModel.transportTypeProperty());
         distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
         estimatedTimeField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
+        imagePathField.textProperty().bindBidirectional(viewModel.imagePathProperty());
 
         // Binding of button disable property
         addTourButton.disableProperty().bind(viewModel.addTourButtonDisabledProperty());

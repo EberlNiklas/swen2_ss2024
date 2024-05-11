@@ -27,6 +27,7 @@ public class EditTourView implements Initializable {
     @FXML private TextField distanceField;
     @FXML private TextField estimatedTimeField;
     @FXML private Button editTourButton;
+    @FXML private TextField imagePathField;
 
     public EditTourView(EditTourViewModel viewModel) {  // Accept viewModel as a constructor parameter
         this.viewModel = viewModel;
@@ -41,6 +42,8 @@ public class EditTourView implements Initializable {
         transportTypeField.textProperty().bindBidirectional(viewModel.transportTypeProperty());
         distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
         estimatedTimeField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
+        imagePathField.textProperty().bindBidirectional(viewModel.imagePathProperty());
+
 
         editTourButton.setOnAction(e -> handleEditTour());
 
@@ -60,6 +63,7 @@ public class EditTourView implements Initializable {
         transportTypeField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
         distanceField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
         estimatedTimeField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
+
     }
 
 
@@ -69,10 +73,10 @@ public class EditTourView implements Initializable {
 
     @FXML
     public void handleEditTour() {
+        viewModel.setImagePath(imagePathField.getText()); // Update the image path in the ViewModel
         viewModel.editTour();
         Stage stage = (Stage) editTourButton.getScene().getWindow();
-        stage.close(); // Closes the window after editing
+        stage.close();
     }
-
 
 }

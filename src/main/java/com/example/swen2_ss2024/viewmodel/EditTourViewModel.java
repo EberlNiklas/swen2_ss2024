@@ -23,6 +23,7 @@ public class EditTourViewModel {
     private final StringProperty transportType = new SimpleStringProperty("");
     private final StringProperty distance = new SimpleStringProperty("");
     private final StringProperty estimatedTime = new SimpleStringProperty("");
+    private final StringProperty imagePath = new SimpleStringProperty("");
 
     // Private constructor
     private EditTourViewModel(Publisher publisher, TourListService tourListService) {
@@ -69,9 +70,15 @@ public class EditTourViewModel {
         currentTour.setDistance(distance.get());
         currentTour.setEstimatedTime(estimatedTime.get());
 
+        // Update image path separately
+        String updatedImagePath = imagePath.get();
+        System.out.println("Updated Image Path: " + updatedImagePath); // Check if the image path is updated
+        publisher.publish(Event.IMAGE_PATH_UPDATED, updatedImagePath);
+
         // Notify all observers about the change
         publisher.publish(Event.TOUR_UPDATED, currentTour);
     }
+
 
 
 
@@ -84,4 +91,16 @@ public class EditTourViewModel {
     public StringProperty transportTypeProperty() { return transportType; }
     public StringProperty distanceProperty() { return distance; }
     public StringProperty estimatedTimeProperty() { return estimatedTime; }
+    public StringProperty imagePathProperty() {
+        return imagePath;
+    }
+
+    public void setImagePath(String path) {
+        if (path != null && !path.isEmpty()) {
+            imagePath.set(path);
+        } else {
+            imagePath.set(null);
+        }
+    }
+
 }
