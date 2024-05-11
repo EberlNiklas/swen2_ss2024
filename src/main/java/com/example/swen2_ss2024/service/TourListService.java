@@ -36,7 +36,6 @@ public class TourListService {
         while (iterator.hasNext()) {
             Tour existingTour = iterator.next();
             if (existingTour.getName().equals(updatedTour.getName())) {
-                // Assuming Tour.equals() and Tour.hashCode() are based on the tour name
                 iterator.remove(); // Remove the old tour
                 tours.add(updatedTour); // Add the updated tour
                 System.out.println("Tour updated: " + updatedTour.getName());
