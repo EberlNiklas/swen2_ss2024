@@ -68,7 +68,9 @@ public class ViewFactory {
         if (TourViewModel.class.equals(viewClass)) {
             return new TourView(tourViewModel);
         }
-
+        if (EditTourView.class.equals(viewClass)) {
+            return new EditTourView(new EditTourViewModel(publisher, tourListService));
+        }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
     }

@@ -2,6 +2,8 @@ package com.example.swen2_ss2024.models;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Tour {
@@ -94,6 +96,19 @@ public class Tour {
 
     public List<Object> getFieldsAsList() {
         return Arrays.asList(name, description, from, to, transportType, distance, estimatedTime);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tour tour = (Tour) o;
+        return Objects.equals(name, tour.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
 

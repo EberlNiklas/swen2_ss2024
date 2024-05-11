@@ -26,9 +26,10 @@ public class TourView  {
     public void initialize() {
         buttonAdd.setOnAction(e -> tourViewModel.onAdd());
         buttonDelete.setOnAction(e -> tourViewModel.delete());
-        buttonMore.setOnAction(e -> tourViewModel.onMore());
+        buttonMore.setOnAction(e -> tourViewModel.onMore()); // This is correct
 
-        this.tourList.setItems(tourViewModel.getTourList());
-        this.tourViewModel.selectIndex().bind(tourList.getSelectionModel().selectedIndexProperty());
+        tourList.setItems(tourViewModel.getTourList());
+        tourViewModel.selectIndex().bind(tourList.getSelectionModel().selectedIndexProperty());
     }
+
 }

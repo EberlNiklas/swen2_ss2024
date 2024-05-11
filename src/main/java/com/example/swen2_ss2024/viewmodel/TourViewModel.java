@@ -20,9 +20,7 @@ public class TourViewModel implements ObjectSubscriber{
         newTourService.loadFXML("add-tour-view.fxml");
     }
 
-    public void onMore() {
-        System.out.println("More options");
-    }
+
 
     private final ObservableList<String> tourList = FXCollections.observableArrayList();
 
@@ -82,4 +80,13 @@ public class TourViewModel implements ObjectSubscriber{
             tourListService.addTour(tour);
         }
     }
+
+    /*test*/
+    public void onMore() {
+        System.out.println("More options");
+
+        // Example of how to load the edit tour view
+        newTourService.loadFXML("edit-tour-view.fxml"); // Ensure you have a method to handle FXML loading
+    }
+
 }
