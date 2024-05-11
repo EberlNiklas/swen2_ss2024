@@ -2,7 +2,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.swen2_ss2024.view.AddTourView">
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.swen2_ss2024.view.AddTourView">
 
     <TextField fx:id="nameField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Name" />
     <TextField fx:id="descriptionField" onAction="#addTour" HBox.hgrow="ALWAYS" promptText="Description" />
@@ -14,4 +14,4 @@
     <Button fx:id="addTourButton" onAction="#addTour" text="Add" />
 
 
-</HBox>
+</VBox>

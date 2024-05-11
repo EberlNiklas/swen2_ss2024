@@ -1,6 +1,7 @@
 package com.example.swen2_ss2024.view;
-import com.example.swen2_ss2024.viewmodel.EditTourViewModel;
 
+import com.example.swen2_ss2024.models.Tour;
+import com.example.swen2_ss2024.viewmodel.EditTourViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -8,7 +9,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditTourView implements Initializable{
+public class EditTourView implements Initializable {
     private final EditTourViewModel viewModel;
 
     @FXML private TextField nameField;
@@ -20,13 +21,12 @@ public class EditTourView implements Initializable{
     @FXML private TextField estimatedTimeField;
     @FXML private Button editTourButton;
 
-    public EditTourView(EditTourViewModel viewModel) {
+    public EditTourView(EditTourViewModel viewModel) {  // Accept viewModel as a constructor parameter
         this.viewModel = viewModel;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Binding properties to text fields
         nameField.textProperty().bindBidirectional(viewModel.nameProperty());
         descriptionField.textProperty().bindBidirectional(viewModel.descriptionProperty());
         fromField.textProperty().bindBidirectional(viewModel.fromProperty());
@@ -35,12 +35,16 @@ public class EditTourView implements Initializable{
         distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
         estimatedTimeField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
 
-        // Button bindings
-        editTourButton.disableProperty().bind(viewModel.editTourButtonDisabledProperty());
+        editTourButton.setOnAction(e -> viewModel.editTour());
+    }
+
+    public void setTour(Tour tour) {
+        viewModel.setTour(tour);
     }
 
     @FXML
     public void editTour() {
         viewModel.editTour();
     }
+
 }

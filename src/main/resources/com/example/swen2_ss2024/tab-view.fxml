@@ -14,7 +14,7 @@
             <tabs>
                 <Tab text="General" closable="false">
                     <!-- General content -->
-                    <ListView fx:id="GeneralContent">
+                    <ListView fx:id="detailsList" VBox.vgrow="ALWAYS">
                         <!---->
                     </ListView>
                 </Tab>

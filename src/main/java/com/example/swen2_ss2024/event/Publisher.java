@@ -56,15 +56,23 @@ public class Publisher {
     }
     public void publish(Event event, Object message) {
         List<ObjectSubscriber> subscribers = objectSubscriberMap.get(event);
-
+        this.lastEvent = event;
         if (null == subscribers) {
             // TODO: Log this event
             return;
         }
 
         for (ObjectSubscriber subscriber: subscribers) {
-            subscriber.notify(message); // Pass the message when notifying subscribers
+            subscriber.notify(message);
         }
+    }
+    private Event lastEvent;
+
+
+
+    // Method to get the last event published
+    public Event getCurrentEvent() {
+        return lastEvent;  // Return the last event
     }
 
 }
