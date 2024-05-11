@@ -79,7 +79,7 @@ public class TourViewModel implements ObjectSubscriber{
         if (message instanceof Tour) {
             Tour tour = (Tour) message;
             addToList(tour.getName());
-            tourListService.addTour(tour);  // Assuming you also want to add the tour to a service-managed list
+            tourListService.addTour(tour);
         }
     }
 }
