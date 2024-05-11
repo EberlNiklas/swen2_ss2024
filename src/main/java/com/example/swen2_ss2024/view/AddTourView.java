@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 public class AddTourView implements Initializable{
@@ -59,6 +61,8 @@ public class AddTourView implements Initializable{
     @FXML
     public void addTour() {
         viewModel.addTour();
-
+        // Close the window after adding the tour
+        Stage stage = (Stage) addTourButton.getScene().getWindow();
+        stage.close();
     }
 }
