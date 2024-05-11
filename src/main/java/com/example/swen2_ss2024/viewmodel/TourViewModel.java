@@ -25,8 +25,10 @@ public class TourViewModel implements ObjectSubscriber {
         this.tourListService = tourListService;
         this.newTourService = new NewTourService();
         this.publisher.subscribe(Event.TOUR_ADDED, this);
+        this.publisher.subscribe(Event.TOUR_UPDATED, this);  // Subscribe to TOUR_UPDATED events
         this.index.addListener((obs, oldVal, newVal) -> selectTour(newVal.intValue()));
     }
+
 
     private void selectTour(int index) {
         if (index == -1) {
@@ -71,8 +73,25 @@ public class TourViewModel implements ObjectSubscriber {
     public void notify(Object message) {
         if (message instanceof Tour) {
             Tour tour = (Tour) message;
-            addToList(tour);
-            tourListService.addTour(tour);
+            switch (publisher.getCurrentEvent()) {
+                case TOUR_ADDED:
+                    addToList(tour);
+                    tourListService.addTour(tour);
+                    break;
+                case TOUR_UPDATED:
+                    updateTourInList(tour);
+                    break;
+            }
+        }
+    }
+
+    private void updateTourInList(Tour updatedTour) {
+        for (int i = 0; i < tourList.size(); i++) {
+            Tour tour = tourList.get(i);
+            if (tour.getName().equals(updatedTour.getName())) {  // Assuming name is a unique identifier
+                tourList.set(i, updatedTour);
+                break;
+            }
         }
     }
 

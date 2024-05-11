@@ -1,111 +1,111 @@
 package com.example.swen2_ss2024.models;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Tour {
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("description")
-    private String description;
-
-    @JsonProperty("from")
-    private String from;
-
-    @JsonProperty("to")
-    private String to;
-
-    @JsonProperty("transport_type")
-    private String transportType;
-
-    @JsonProperty("distance")
-    private String distance;
-
-    @JsonProperty("estimated_time")
-    private String estimatedTime;
+    private final StringProperty name = new SimpleStringProperty(this, "name");
+    private final StringProperty description = new SimpleStringProperty(this, "description");
+    private final StringProperty from = new SimpleStringProperty(this, "from");
+    private final StringProperty to = new SimpleStringProperty(this, "to");
+    private final StringProperty transportType = new SimpleStringProperty(this, "transportType");
+    private final StringProperty distance = new SimpleStringProperty(this, "distance");
+    private final StringProperty estimatedTime = new SimpleStringProperty(this, "estimatedTime");
 
     public Tour(String name, String description, String from, String to, String transportType, String distance, String estimatedTime) {
-        this.name = name;
-        this.description = description;
-        this.from = from;
-        this.to = to;
-        this.transportType = transportType;
-        this.distance = distance;
-        this.estimatedTime = estimatedTime;
+        this.name.set(name);
+        this.description.set(description);
+        this.from.set(from);
+        this.to.set(to);
+        this.transportType.set(transportType);
+        this.distance.set(distance);
+        this.estimatedTime.set(estimatedTime);
     }
 
-    public String getName() {
+    // Property getters
+    public StringProperty nameProperty() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
+    public StringProperty descriptionProperty() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFrom() {
+    public StringProperty fromProperty() {
         return from;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
+    public StringProperty toProperty() {
         return to;
     }
 
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getTransportType() {
+    public StringProperty transportTypeProperty() {
         return transportType;
     }
 
-    public void setTransportType(String transportType) {
-        this.transportType = transportType;
-    }
-
-    public String getDistance() {
+    public StringProperty distanceProperty() {
         return distance;
     }
 
-    public void setDistance(String distance) {
-        this.distance = distance;
-    }
-
-    public String getEstimatedTime() {
+    public StringProperty estimatedTimeProperty() {
         return estimatedTime;
     }
 
+    // Normal getters
+    public String getName() {
+        return name.get();
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public String getFrom() {
+        return from.get();
+    }
+
+    public String getTo() {
+        return to.get();
+    }
+
+    public String getTransportType() {
+        return transportType.get();
+    }
+
+    public String getDistance() {
+        return distance.get();
+    }
+
+    public String getEstimatedTime() {
+        return estimatedTime.get();
+    }
+
+    // Setters
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
+    public void setFrom(String from) {
+        this.from.set(from);
+    }
+
+    public void setTo(String to) {
+        this.to.set(to);
+    }
+
+    public void setTransportType(String transportType) {
+        this.transportType.set(transportType);
+    }
+
+    public void setDistance(String distance) {
+        this.distance.set(distance);
+    }
+
     public void setEstimatedTime(String estimatedTime) {
-        this.estimatedTime = estimatedTime;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tour tour = (Tour) o;
-        return name.equals(tour.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
+        this.estimatedTime.set(estimatedTime);
     }
 }
-

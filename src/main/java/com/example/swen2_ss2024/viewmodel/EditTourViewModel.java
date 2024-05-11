@@ -59,8 +59,8 @@ public class EditTourViewModel {
             System.out.println("Error: No current tour set when trying to edit.");
             return;
         }
-        System.out.println("Editing tour: " + currentTour.getName());
 
+        // Set properties which are bound to UI fields
         currentTour.setName(name.get());
         currentTour.setDescription(description.get());
         currentTour.setFrom(from.get());
@@ -69,9 +69,11 @@ public class EditTourViewModel {
         currentTour.setDistance(distance.get());
         currentTour.setEstimatedTime(estimatedTime.get());
 
-        publisher.publish(Event.TOUR_UPDATED, currentTour); // Publish the edited tour
-
+        // Notify all observers about the change
+        publisher.publish(Event.TOUR_UPDATED, currentTour);
     }
+
+
 
 
 
