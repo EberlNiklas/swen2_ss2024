@@ -94,16 +94,13 @@ public class Tour {
         this.estimatedTime = estimatedTime;
     }
 
-    public List<Object> getFieldsAsList() {
-        return Arrays.asList(name, description, from, to, transportType, distance, estimatedTime);
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tour tour = (Tour) o;
-        return Objects.equals(name, tour.name);
+        return name.equals(tour.name);
     }
 
     @Override

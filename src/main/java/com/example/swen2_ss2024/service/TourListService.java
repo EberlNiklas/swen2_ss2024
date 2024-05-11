@@ -17,6 +17,14 @@ public class TourListService {
         return tours;
     }
 
+    public Tour getTourByName(String name) {
+        for (Tour tour : tours) {
+            if (tour.getName().equals(name)) {
+                return tour;
+            }
+        }
+        return null; // Return null if no tour matches the given name
+    }
     public boolean deleteTourByName(String tourName) {
         Iterator<Tour> iterator = tours.iterator();
         while (iterator.hasNext()) {
@@ -31,18 +39,14 @@ public class TourListService {
         return false;
     }
 
-    public boolean updateTour(Tour updatedTour) {
-        Iterator<Tour> iterator = tours.iterator();
-        while (iterator.hasNext()) {
-            Tour existingTour = iterator.next();
-            if (existingTour.getName().equals(updatedTour.getName())) {
-                iterator.remove(); // Remove the old tour
-                tours.add(updatedTour); // Add the updated tour
-                System.out.println("Tour updated: " + updatedTour.getName());
-                return true;
-            }
+    public boolean updateTour(Tour currentTour, Tour updatedTour) {
+        if (tours.contains(currentTour)) {
+            tours.remove(currentTour);
+            tours.add(updatedTour);
+            System.out.println("Tour updated: " + updatedTour.getName());
+            return true;
         }
-        System.out.println("Failed to update, tour not found: " + updatedTour.getName());
+        System.out.println("Failed to update, tour not found: " + currentTour.getName());
         return false;
     }
 }

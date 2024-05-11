@@ -1,11 +1,13 @@
 package com.example.swen2_ss2024.viewmodel;
 
+import com.example.swen2_ss2024.ViewFactory;
 import com.example.swen2_ss2024.models.Tour;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.ObjectSubscriber;
 import com.example.swen2_ss2024.event.Publisher;
 import com.example.swen2_ss2024.service.NewTourService;
 import com.example.swen2_ss2024.service.TourListService;
+import com.example.swen2_ss2024.view.EditTourView;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -31,7 +33,7 @@ public class TourViewModel implements ObjectSubscriber {
             System.out.println("No tour selected!");
         } else {
             Tour selectedTour = tourList.get(index);
-            publisher.publish(Event.TOUR_SELECTED, selectedTour); // Publish event with the selected tour
+            publisher.publish(Event.TOUR_SELECTED, selectedTour); // Publishes event with the selected tour
             System.out.println("Tour selected: " + selectedTour.getName());
         }
     }
@@ -53,7 +55,7 @@ public class TourViewModel implements ObjectSubscriber {
         if (number >= 0 && number < tourList.size()) {
             Tour tour = tourList.get(number);
             if (tourListService.deleteTourByName(tour.getName())) {
-                publisher.publish(Event.TOUR_DELETED, tour);  // Publish the tour has been deleted
+                publisher.publish(Event.TOUR_DELETED, tour);  // Publishes the tour has been deleted
                 tourList.remove(number);
                 System.out.println("Tour deleted: " + tour.getName());
             }
@@ -75,7 +77,14 @@ public class TourViewModel implements ObjectSubscriber {
     }
 
     public void onMore() {
-        System.out.println("More options");
+        // Obtains the selected Tour
+        Tour selectedTour = tourList.get(index.get());
+        EditTourView editView = (EditTourView) ViewFactory.getInstance().create(EditTourView.class);
+        editView.setTour(selectedTour);
         newTourService.loadFXML("edit-tour-view.fxml");
+
+        // Ensures that the tour details are updated after editing
+        publisher.publish(Event.TOUR_SELECTED, selectedTour);
     }
+
 }

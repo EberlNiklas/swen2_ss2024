@@ -31,7 +31,7 @@ public class AddTourViewModel {
         this.publisher = publisher;
         this.tourListService =tourListService;
 
-        // Listen to changes in fields and update addButtonDisabled property
+        // Listens to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         description.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         from.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
@@ -42,7 +42,7 @@ public class AddTourViewModel {
     }
 
     private void updateAddTourButtonDisabled() {
-        // Check if any of the fields are empty
+        // Checks if any of the fields are empty
         addTourButtonDisabled.set(name.get().isEmpty() || description.get().isEmpty() ||
                 from.get().isEmpty() || to.get().isEmpty() ||
                 transportType.get().isEmpty() || distance.get().isEmpty() ||
@@ -56,7 +56,7 @@ public class AddTourViewModel {
             tourListService.addTour(tour);
             publisher.publish(Event.TOUR_ADDED, tour);
 
-            // Clear fields after publishing
+            // Clears fields after publishing
             name.set("");
             description.set("");
             from.set("");

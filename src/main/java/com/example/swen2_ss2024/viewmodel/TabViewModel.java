@@ -9,8 +9,7 @@ import com.example.swen2_ss2024.models.Tour;
 
 import java.util.Arrays;
 
-import static com.example.swen2_ss2024.event.Event.TOUR_DELETED;
-import static com.example.swen2_ss2024.event.Event.TOUR_SELECTED;
+import static com.example.swen2_ss2024.event.Event.*;
 
 public class TabViewModel implements ObjectSubscriber {
     private Publisher publisher;
@@ -21,6 +20,7 @@ public class TabViewModel implements ObjectSubscriber {
         this.publisher = publisher;
         publisher.subscribe(TOUR_SELECTED, this);
         publisher.subscribe(TOUR_DELETED, this);
+        publisher.subscribe(TOUR_UPDATED, this);
     }
 
     @Override
@@ -32,6 +32,10 @@ public class TabViewModel implements ObjectSubscriber {
                     selectedTour.set(tour);
                     updateTourDetails();
                     break;
+                case TOUR_UPDATED: // Updates tour details on tour edit event
+                    selectedTour.set(tour);
+                    updateTourDetails();
+                    break;
                 case TOUR_DELETED:
                     clearTourDetails();
                     break;
@@ -39,7 +43,7 @@ public class TabViewModel implements ObjectSubscriber {
         }
     }
 
-
+    // method to update tour details
     private void updateTourDetails() {
         tourDetails.clear();
         Tour tour = selectedTour.get();
@@ -59,7 +63,6 @@ public class TabViewModel implements ObjectSubscriber {
     private void clearTourDetails() {
         tourDetails.clear();
     }
-
 
     public ObservableList<String> getTourDetails() {
         return tourDetails;

@@ -42,29 +42,24 @@ public class ViewFactory {
         if (SearchBarView.class == viewClass) {
             return new SearchBarView(searchViewModel);
         }
-
         if (MenuView.class == viewClass) {
             return new MenuView(menuViewModel);
         }
-
         if (TabView.class == viewClass) {
             return new TabView(tabViewModel);
         }
-
         if (TourLogsView.class == viewClass) {
             return new TourLogsView(tourLogsViewModel);
         }
-
         if (TourView.class == viewClass) {
             return new TourView(tourViewModel);
         }
-
         if (AddTourView.class == viewClass) {
             return new AddTourView(addTourViewModel);
         }
-
         if (EditTourView.class == viewClass) {
-            return new EditTourView(new EditTourViewModel(publisher, tourListService));
+            // Use singleton instance of EditTourViewModel with dependencies
+            return new EditTourView(EditTourViewModel.getInstance(publisher, tourListService));
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);

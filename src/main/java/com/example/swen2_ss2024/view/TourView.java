@@ -36,7 +36,7 @@ public class TourView {
         tourList.setItems(tourViewModel.getTourList());
         tourViewModel.selectIndex().bind(tourList.getSelectionModel().selectedIndexProperty());
 
-        // Set up how each tour is displayed in the ListView
+        // Sets up how each tour is displayed in the ListView
         tourList.setCellFactory(lv -> new TextFieldListCell<>(new StringConverter<Tour>() {
             @Override
             public String toString(Tour tour) {
