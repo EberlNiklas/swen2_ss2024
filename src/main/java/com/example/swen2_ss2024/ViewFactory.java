@@ -28,9 +28,8 @@ public class ViewFactory {
         menuViewModel = new MenuViewModel();
         tabViewModel = new TabViewModel();
         tourLogsViewModel = new TourLogsViewModel();
-        tourViewModel = new TourViewModel(publisher);
+        tourViewModel = new TourViewModel(publisher, tourListService);
         addTourViewModel = new AddTourViewModel(publisher,tourListService);
-
     }
 
     public static ViewFactory getInstance() {
@@ -69,6 +68,7 @@ public class ViewFactory {
         if (TourViewModel.class.equals(viewClass)) {
             return new TourView(tourViewModel);
         }
+
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);
     }

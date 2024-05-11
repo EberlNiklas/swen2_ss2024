@@ -23,8 +23,8 @@
                         <Region HBox.hgrow="ALWAYS"/>
                         <HBox alignment="CENTER_RIGHT" spacing="2">
                             <Button fx:id="buttonAdd" text= "%add-button-text" />
-                            <Button fx:id="buttonDelete" text="Delete" />
-                            <Button fx:id="buttonMore" text="More" />
+                            <Button fx:id="buttonDelete" text="-" />
+                            <Button fx:id="buttonMore" text="..." />
                         </HBox>
                     </HBox>
                     <ListView fx:id="tourList" VBox.vgrow="ALWAYS">
