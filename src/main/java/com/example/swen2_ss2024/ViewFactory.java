@@ -24,6 +24,8 @@ public class ViewFactory {
 
     private final TourLogListService tourLogListService;
 
+
+
     private ViewFactory() {
         publisher = new Publisher();
         tourListService = new TourListService();
@@ -69,6 +71,9 @@ public class ViewFactory {
         }
         if (AddTourLogView.class == viewClass) {
             return new AddTourLogView(addTourLogViewModel);
+        }
+        if (EditTourLogView.class == viewClass) {
+            return new EditTourLogView(EditTourLogViewModel.getInstance(publisher, tourLogListService));
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);

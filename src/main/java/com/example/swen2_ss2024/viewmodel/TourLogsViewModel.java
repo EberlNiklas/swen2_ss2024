@@ -10,6 +10,7 @@ import com.example.swen2_ss2024.service.NewTourLogService;
 import com.example.swen2_ss2024.service.NewTourService;
 import com.example.swen2_ss2024.service.TourListService;
 import com.example.swen2_ss2024.service.TourLogListService;
+import com.example.swen2_ss2024.view.EditTourLogView;
 import com.example.swen2_ss2024.view.EditTourView;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -100,13 +101,13 @@ public class TourLogsViewModel implements ObjectSubscriber {
     }
 
     public void onMore() {
-        /*// Obtains the selected Tour
+        // Obtains the selected Tour
         TourLog selectedTourLog = tourLogList.get(index.get());
-        EditTourView editView = (EditTourView) ViewFactory.getInstance().create(EditTourView.class);
-        editView.setTour(selectedTourLog);
-        newTourService.loadFXML("edit-tour-view.fxml");
+        EditTourLogView editView = (EditTourLogView) ViewFactory.getInstance().create(EditTourLogView.class);
+        editView.setTourLog(selectedTourLog);
+        newTourLogService.loadFXML("edit-tour-log-view.fxml");
 
         // Ensures that the tour details are updated after editing
-        publisher.publish(Event.TOUR_SELECTED, selectedTour);*/
+        publisher.publish(Event.TOUR_LOG_SELECTED, selectedTourLog);
     }
 }
