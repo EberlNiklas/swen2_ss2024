@@ -12,6 +12,7 @@
     <TextField fx:id="dateField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Date" />
     <TextField fx:id="durationField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Duration" />
     <TextField fx:id="distanceField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Distance" />
+    <TextField fx:id="difficultyField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Difficulty" />
     <TextField fx:id="commentField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Comment" />
     <TextField fx:id="ratingField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Rating" />
     <Button fx:id="addTourLogButton" onAction="#addTourLog" text="Add" />

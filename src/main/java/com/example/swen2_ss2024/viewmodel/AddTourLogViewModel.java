@@ -25,6 +25,7 @@ public class AddTourLogViewModel {
     private final StringProperty distance = new SimpleStringProperty("");
     private final StringProperty comment = new SimpleStringProperty("");
     private final StringProperty rating = new SimpleStringProperty("");
+    private final StringProperty difficulty = new SimpleStringProperty("");
 
     private final BooleanProperty addTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
@@ -41,6 +42,7 @@ public class AddTourLogViewModel {
         distance.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         comment.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         rating.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        difficulty.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         // Ensure initial state checks
         updateAddTourButtonDisabled();
     }
@@ -50,7 +52,7 @@ public class AddTourLogViewModel {
     private void updateAddTourButtonDisabled() {
         boolean anyFieldEmpty = name.get().isEmpty() || date.get().isEmpty() ||
                 duration.get().isEmpty() || distance.get().isEmpty() ||
-                comment.get().isEmpty() || rating.get().isEmpty();
+                comment.get().isEmpty() || rating.get().isEmpty() || difficulty.get().isEmpty();
 
         System.out.println("Fields Empty: " + anyFieldEmpty); // Debug output
         addTourLogButtonDisabled.set(anyFieldEmpty);
@@ -62,7 +64,7 @@ public class AddTourLogViewModel {
             System.out.println("Adding tourLog Button works");
             TourLog tourLog = new TourLog(
                     name.get(), date.get(), duration.get(), distance.get(),
-                    comment.get(), rating.get()
+                    comment.get(), rating.get(), difficulty.get()
             );
             tourLogListService.addTourLog(tourLog);
             publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
@@ -104,6 +106,9 @@ public class AddTourLogViewModel {
         return rating;
     }
 
+    public StringProperty difficultyProperty() {
+        return difficulty;
+    }
     public BooleanProperty addTourLogButtonDisabledProperty() {
         return addTourLogButtonDisabled;
     }

@@ -13,15 +13,16 @@ public class TourLog {
     private final StringProperty distance = new SimpleStringProperty(this, "distance");
     private final StringProperty comment = new SimpleStringProperty(this, "comment");
     private final StringProperty rating = new SimpleStringProperty(this, "rating");
+    private final StringProperty difficulty = new SimpleStringProperty(this, "difficulty");
 
-    public TourLog(String name, String date, String duration, String distance, String comment, String rating) {
+    public TourLog(String name, String date, String duration, String distance, String comment, String rating, String difficulty) {
         this.name.set(name);
         this.date.set(date);
         this.duration.set(duration);
         this.distance.set(distance);
         this.comment.set(comment);
         this.rating.set(rating);
-
+        this.difficulty.set(difficulty);
     }
 
     public String getName() {
@@ -96,4 +97,15 @@ public class TourLog {
         this.rating.set(rating);
     }
 
+    public String getDifficulty() {
+        return difficulty.get();
+    }
+
+    public StringProperty difficultyProperty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty.set(difficulty);
+    }
 }
