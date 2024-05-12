@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +21,9 @@ public class TabView implements Initializable {
 
     private final TabViewModel tabViewModel;
 
+    @FXML
+    private VBox routeContainer;
+
     public TabView(TabViewModel tabViewModel) {
         this.tabViewModel = tabViewModel;
     }
@@ -29,16 +33,14 @@ public class TabView implements Initializable {
         detailsList.setItems(tabViewModel.getTourDetails());
         routeImageView.imageProperty().bind(tabViewModel.routeImageProperty());
 
-        routeImageView.sceneProperty().addListener(new ChangeListener<Scene>() {
-            @Override
-            public void changed(ObservableValue<? extends Scene> observableValue, Scene oldScene, Scene newScene) {
-                if (newScene != null) {
-                    routeImageView.setPreserveRatio(true);
-                    routeImageView.fitWidthProperty().bind(newScene.widthProperty());
-                    routeImageView.fitHeightProperty().bind(newScene.heightProperty());
-                }
-            }
+        routeContainer.widthProperty().addListener((obs, oldVal, newVal) -> {
+            routeImageView.setFitWidth(newVal.doubleValue() * 0.95); // 95% of container width
         });
+        routeContainer.heightProperty().addListener((obs, oldVal, newVal) -> {
+            routeImageView.setFitHeight(newVal.doubleValue() * 0.95); // 95% of container height
+        });
+
+        routeImageView.setPreserveRatio(true);
     }
 
 

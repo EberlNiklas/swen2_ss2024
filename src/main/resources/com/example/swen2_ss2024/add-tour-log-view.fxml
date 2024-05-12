@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.swen2_ss2024.view.AddTourLogView">
+
+    <TextField fx:id="nameField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Name" />
+    <TextField fx:id="dateField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Date" />
+    <TextField fx:id="durationField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Duration" />
+    <TextField fx:id="distanceField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Distance" />
+    <TextField fx:id="commentField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Comment" />
+    <TextField fx:id="ratingField" onAction="#addTourLog" HBox.hgrow="ALWAYS" promptText="Rating" />
+    <Button fx:id="addTourLogButton" onAction="#addTourLog" text="Add" />
+
+
+</VBox>

@@ -14,9 +14,9 @@
         <Label text="Tour Logs"/>
         <Region HBox.hgrow="ALWAYS"/>
         <HBox alignment="CENTER_RIGHT" spacing="5">
-            <Button text="Add" onAction="#handleAddTourLog"/>
-            <Button text="Edit" onAction="#handleEditTourLog"/>
-            <Button text="Delete" onAction="#handleDeleteTourLog"/>
+            <Button text="+" fx:id="tourLogAdd"/>
+            <Button text="..." fx:id="tourLogEdit"/>
+            <Button text="-" fx:id="tourLogDelete"/>
         </HBox>
     </HBox>
     <ListView fx:id="tourLogList">

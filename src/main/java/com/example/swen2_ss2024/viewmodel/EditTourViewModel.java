@@ -96,10 +96,13 @@ public class EditTourViewModel {
     }
 
     public void setImagePath(String path) {
-        if (path != null && !path.isEmpty()) {
+        if (path != null && !path.isEmpty() && !path.equals(imagePath.get())) {
             imagePath.set(path);
-        } else {
+            publisher.publish(Event.IMAGE_PATH_UPDATED, path);
+            System.out.println("Updated Route Information: " + path);
+        } else if (path == null || path.isEmpty()) {
             imagePath.set(null);
+            publisher.publish(Event.IMAGE_PATH_UPDATED, null);
         }
     }
 

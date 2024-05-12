@@ -18,17 +18,23 @@ public class ViewFactory {
     private final TourLogsViewModel tourLogsViewModel;
     private final AddTourViewModel addTourViewModel;
 
+    private final AddTourLogViewModel addTourLogViewModel;
+
     private final TourListService tourListService;
+
+    private final TourLogListService tourLogListService;
 
     private ViewFactory() {
         publisher = new Publisher();
         tourListService = new TourListService();
+        tourLogListService = new TourLogListService();
         searchViewModel = new SearchViewModel(publisher);
         menuViewModel = new MenuViewModel();
         tourViewModel = new TourViewModel(publisher, tourListService);
         tabViewModel = new TabViewModel(publisher);
-        tourLogsViewModel = new TourLogsViewModel();
+        tourLogsViewModel = new TourLogsViewModel(publisher, tourLogListService);
         addTourViewModel = new AddTourViewModel(publisher, tourListService);
+        addTourLogViewModel = new AddTourLogViewModel(publisher, tourLogListService);
     }
 
     public static ViewFactory getInstance() {
@@ -60,6 +66,9 @@ public class ViewFactory {
         if (EditTourView.class == viewClass) {
             // Use singleton instance of EditTourViewModel with dependencies
             return new EditTourView(EditTourViewModel.getInstance(publisher, tourListService));
+        }
+        if (AddTourLogView.class == viewClass) {
+            return new AddTourLogView(addTourLogViewModel);
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);

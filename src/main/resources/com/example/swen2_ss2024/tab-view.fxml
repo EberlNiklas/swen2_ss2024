@@ -20,11 +20,8 @@
                     </ListView>
                 </Tab>
                 <Tab text="Route" closable="false">
-                    <VBox>
-                        <ImageView fx:id="routeImageView" />
-                        <ListView fx:id="RouteContent">
-                            <!-- Existing content -->
-                        </ListView>
+                    <VBox fx:id="routeContainer" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                        <ImageView fx:id="routeImageView" preserveRatio="true"/>
                     </VBox>
                 </Tab>
                 <Tab text="Misc" closable="false">
