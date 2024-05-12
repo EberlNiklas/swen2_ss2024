@@ -72,7 +72,7 @@ public class EditTourViewModel {
 
         // Update image path separately
         String updatedImagePath = imagePath.get();
-        System.out.println("Updated Image Path: " + updatedImagePath); // Check if the image path is updated
+        System.out.println("Updated Route Information: " + updatedImagePath); // Check if the image path is updated
         publisher.publish(Event.IMAGE_PATH_UPDATED, updatedImagePath);
 
         // Notify all observers about the change

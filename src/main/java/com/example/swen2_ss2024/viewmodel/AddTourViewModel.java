@@ -54,7 +54,7 @@ public class AddTourViewModel {
                 estimatedTime.get().isEmpty() || imagePath.get().isEmpty();
 
         System.out.println("Fields Empty: " + anyFieldEmpty); // Debug output
-        System.out.println("Image Path: " + imagePath.get()); // Additional debug for image path
+        System.out.println("Route Information: " + imagePath.get()); // Additional debug for image path
         addTourButtonDisabled.set(anyFieldEmpty);
     }
 

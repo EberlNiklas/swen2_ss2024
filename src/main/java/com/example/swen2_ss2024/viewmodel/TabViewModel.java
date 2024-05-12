@@ -70,7 +70,7 @@ public class TabViewModel implements ObjectSubscriber {
                     "Transport Type: " + tour.getTransportType(),
                     "Distance: " + tour.getDistance(),
                     "Estimated Time: " + tour.getEstimatedTime(),
-                    "Image Path: " + tour.getImagePath()
+                    "Route Informatino: " + tour.getImagePath()
             ));
             routeImage.set(new Image(tour.getImagePath()));
 
