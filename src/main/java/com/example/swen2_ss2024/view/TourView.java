@@ -3,6 +3,7 @@ package com.example.swen2_ss2024.view;
 import com.example.swen2_ss2024.viewmodel.TourViewModel;
 import com.example.swen2_ss2024.models.Tour;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -17,7 +18,6 @@ public class TourView {
     private Button buttonDelete;
     @FXML
     private Button buttonMore;
-
     @FXML
     private ListView<Tour> tourList;
 
@@ -49,4 +49,6 @@ public class TourView {
             }
         }));
     }
+
+
 }

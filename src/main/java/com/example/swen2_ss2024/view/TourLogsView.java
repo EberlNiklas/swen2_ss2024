@@ -2,6 +2,7 @@ package com.example.swen2_ss2024.view;
 
 import com.example.swen2_ss2024.models.Tour;
 import com.example.swen2_ss2024.models.TourLog;
+import com.example.swen2_ss2024.service.TourListService;
 import com.example.swen2_ss2024.viewmodel.TourLogsViewModel;
 import com.example.swen2_ss2024.viewmodel.TourViewModel;
 import javafx.fxml.FXML;
@@ -31,14 +32,28 @@ public class TourLogsView{
     private ListView<TourLog> tourLogList;
 
     private final TourLogsViewModel tourLogsViewModel;
+    private final TourListService tourListService;
 
     public TourLogsView(TourLogsViewModel tourLogsViewModel) {
         this.tourLogsViewModel = tourLogsViewModel;
+        this.tourListService = new TourListService();
     }
 
     @FXML
     public void initialize() {
-        tourLogAdd.setOnAction(e -> tourLogsViewModel.onAdd());
+        tourLogAdd.setOnAction(e -> {
+            // Replace these parameters with the actual values
+            String name = "Tour name";
+            String description = "Tour description";
+            String from = "From location";
+            String to = "To location";
+            String transportType = "Transport type";
+            String distance = "Distance";
+            String estimatedTime = "Estimated time";
+            String imagePath = "Image path";
+
+            tourListService.createTour(name, description, from, to, transportType, distance, estimatedTime, imagePath);
+        });
         tourLogDelete.setOnAction(e -> tourLogsViewModel.delete());
         tourLogEdit.setOnAction(e -> tourLogsViewModel.onMore());
 

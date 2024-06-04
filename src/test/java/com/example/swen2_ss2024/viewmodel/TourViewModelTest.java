@@ -19,10 +19,10 @@ public class TourViewModelTest {
 
     @BeforeEach
     public void setUp() {
-        viewModel = new TourViewModel(new Publisher(), new TourListService());
-        viewModel.getTourList().addAll(FXCollections.observableArrayList(new Tour("Tour 1", ".", ".", ".", ".", ".", ".", "."), new Tour("Tour 2", ".", ".", ".", ".", ".", ".", ".")));
+        Publisher publisher = new Publisher();
+        TourListService tourListService = new TourListService();
+        viewModel = new TourViewModel(publisher, tourListService);
     }
-
     @Test
     public void testSelectTour_ValidIndex() {
         viewModel.selectIndex().set(1);

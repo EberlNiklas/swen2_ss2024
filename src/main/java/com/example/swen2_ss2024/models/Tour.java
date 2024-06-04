@@ -1,9 +1,13 @@
 package com.example.swen2_ss2024.models;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Tour {
+
+    private final IntegerProperty id = new SimpleIntegerProperty(this, "id");
     private final StringProperty name = new SimpleStringProperty(this, "name");
     private final StringProperty description = new SimpleStringProperty(this, "description");
     private final StringProperty from = new SimpleStringProperty(this, "from");
@@ -14,6 +18,7 @@ public class Tour {
     private final StringProperty imagePath = new SimpleStringProperty(this, "imagePath");
 
     public Tour(String name, String description, String from, String to, String transportType, String distance, String estimatedTime, String imagePath) {
+
         this.name.set(name);
         this.description.set(description);
         this.from.set(from);
@@ -23,7 +28,18 @@ public class Tour {
         this.estimatedTime.set(estimatedTime);
         this.imagePath.set(imagePath);
     }
-
+    // Property getter
+    public IntegerProperty idProperty() {
+        return id;
+    }
+    // Normal getter
+    public int getId() {
+        return id.get();
+    }
+    // Setter
+    public void setId(int id) {
+        this.id.set(id);
+    }
     // Property getters
     public StringProperty nameProperty() {
         return name;

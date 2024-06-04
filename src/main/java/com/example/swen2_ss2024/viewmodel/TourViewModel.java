@@ -1,6 +1,7 @@
 package com.example.swen2_ss2024.viewmodel;
 
 import com.example.swen2_ss2024.ViewFactory;
+import com.example.swen2_ss2024.database.Database;
 import com.example.swen2_ss2024.models.Tour;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.ObjectSubscriber;
@@ -13,12 +14,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+
 public class TourViewModel implements ObjectSubscriber {
     private final NewTourService newTourService;
     private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
     private final IntegerProperty index = new SimpleIntegerProperty();
-    private TourListService tourListService;
-    private Publisher publisher;
+    private final Publisher publisher;
+    private final TourListService tourListService;
 
     public TourViewModel(Publisher publisher, TourListService tourListService) {
         this.publisher = publisher;
@@ -27,8 +30,17 @@ public class TourViewModel implements ObjectSubscriber {
         this.publisher.subscribe(Event.TOUR_ADDED, this);
         this.publisher.subscribe(Event.TOUR_UPDATED, this);  // Subscribe to TOUR_UPDATED events
         this.index.addListener((obs, oldVal, newVal) -> selectTour(newVal.intValue()));
+
+        // Load initial data from database
+        loadToursFromDatabase();
     }
 
+    private void loadToursFromDatabase() {
+        tourList.clear();
+
+            tourList.addAll(tourListService.getTours());
+
+    }
 
     private void selectTour(int index) {
         if (index == -1) {
@@ -38,10 +50,6 @@ public class TourViewModel implements ObjectSubscriber {
             publisher.publish(Event.TOUR_SELECTED, selectedTour); // Publishes event with the selected tour
             System.out.println("Tour selected: " + selectedTour.getName());
         }
-    }
-
-    private void addToList(Tour tour) {
-        tourList.add(tour);
     }
 
     public ObservableList<Tour> getTourList() {
@@ -56,14 +64,17 @@ public class TourViewModel implements ObjectSubscriber {
         int number = index.get();
         if (number >= 0 && number < tourList.size()) {
             Tour tour = tourList.get(number);
-            if (tourListService.deleteTourByName(tour.getName())) {
-                publisher.publish(Event.TOUR_DELETED, tour);  // Publishes the tour has been deleted
-                tourList.remove(number);
-                System.out.println("Tour deleted: " + tour.getName());
+            try {
+                if (Database.deleteTourById(tour.getId())) {
+                    publisher.publish(Event.TOUR_DELETED, tour);  // Publishes the tour has been deleted
+                    tourList.remove(number);
+                    System.out.println("Tour deleted: " + tour.getName());
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
-
 
     public void onAdd() {
         newTourService.loadFXML("add-tour-view.fxml");
@@ -75,22 +86,15 @@ public class TourViewModel implements ObjectSubscriber {
             Tour tour = (Tour) message;
             switch (publisher.getCurrentEvent()) {
                 case TOUR_ADDED:
-                    addToList(tour);
-                    tourListService.addTour(tour);
+                    tourList.add(tour); // Add the new tour directly to the list
                     break;
                 case TOUR_UPDATED:
-                    updateTourInList(tour);
+                    int index = tourList.indexOf(tour);
+                    if (index != -1) {
+                        // Replace the old tour with the updated one
+                        tourList.set(index, tour);
+                    }
                     break;
-            }
-        }
-    }
-
-    private void updateTourInList(Tour updatedTour) {
-        for (int i = 0; i < tourList.size(); i++) {
-            Tour tour = tourList.get(i);
-            if (tour.getName().equals(updatedTour.getName())) {  // Assuming name is a unique identifier
-                tourList.set(i, updatedTour);
-                break;
             }
         }
     }
@@ -106,4 +110,14 @@ public class TourViewModel implements ObjectSubscriber {
         publisher.publish(Event.TOUR_SELECTED, selectedTour);
     }
 
+    public void setTour(int id) {
+        try {
+            Tour tour = Database.getTour(id);
+            if (tour != null) {
+                tourList.add(tour);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

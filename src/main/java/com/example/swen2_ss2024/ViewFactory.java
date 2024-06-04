@@ -17,14 +17,10 @@ public class ViewFactory {
     private final TabViewModel tabViewModel;
     private final TourLogsViewModel tourLogsViewModel;
     private final AddTourViewModel addTourViewModel;
-
     private final AddTourLogViewModel addTourLogViewModel;
 
     private final TourListService tourListService;
-
     private final TourLogListService tourLogListService;
-
-
 
     private ViewFactory() {
         publisher = new Publisher();
@@ -44,6 +40,14 @@ public class ViewFactory {
             instance = new ViewFactory();
         }
         return instance;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public TourListService getTourListService() {
+        return tourListService;
     }
 
     public Object create(Class<?> viewClass) {
@@ -66,8 +70,7 @@ public class ViewFactory {
             return new AddTourView(addTourViewModel);
         }
         if (EditTourView.class == viewClass) {
-            // Use singleton instance of EditTourViewModel with dependencies
-            return new EditTourView(EditTourViewModel.getInstance(publisher, tourListService));
+            return new EditTourView(); // Use no-argument constructor
         }
         if (AddTourLogView.class == viewClass) {
             return new AddTourLogView(addTourLogViewModel);
