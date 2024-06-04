@@ -164,19 +164,6 @@ public class Database {
         return tours;
     }
 
-    public static boolean deleteTourByName(String tourName) throws SQLException {
-        String sql = "DELETE FROM Tour WHERE name = ?";
-
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, tourName);
-            int affectedRows = pstmt.executeUpdate();
-
-            return affectedRows > 0;
-        }
-    }
-
     public static boolean deleteTourById(int id) throws SQLException {
         String sql = "DELETE FROM Tour WHERE id = ?";
 

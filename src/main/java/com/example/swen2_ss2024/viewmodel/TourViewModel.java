@@ -37,9 +37,7 @@ public class TourViewModel implements ObjectSubscriber {
 
     private void loadToursFromDatabase() {
         tourList.clear();
-
-            tourList.addAll(tourListService.getTours());
-
+        tourList.addAll(tourListService.getTours());
     }
 
     private void selectTour(int index) {
@@ -89,10 +87,11 @@ public class TourViewModel implements ObjectSubscriber {
                     tourList.add(tour); // Add the new tour directly to the list
                     break;
                 case TOUR_UPDATED:
-                    int index = tourList.indexOf(tour);
-                    if (index != -1) {
-                        // Replace the old tour with the updated one
-                        tourList.set(index, tour);
+                    for (int i = 0; i < tourList.size(); i++) {
+                        if (tourList.get(i).getId() == tour.getId()) {
+                            tourList.set(i, tour);
+                            break;
+                        }
                     }
                     break;
             }
