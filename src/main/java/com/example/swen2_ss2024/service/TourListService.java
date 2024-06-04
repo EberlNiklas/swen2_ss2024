@@ -72,16 +72,7 @@ public class TourListService {
         return false;
     }
 
-    public boolean updateTour(Tour currentTour, Tour updatedTour) {
-        if (tours.contains(currentTour)) {
-            tours.remove(currentTour);
-            tours.add(updatedTour);
-            System.out.println("Tour updated: " + updatedTour.getName());
-            return true;
-        }
-        System.out.println("Failed to update, tour not found: " + currentTour.getName());
-        return false;
-    }
+
 
     public void createTour(String name, String description, String from, String to, String transportType, String distance, String estimatedTime, String imagePath) {
         System.out.println("Creating tour..."); // Print statement for debugging

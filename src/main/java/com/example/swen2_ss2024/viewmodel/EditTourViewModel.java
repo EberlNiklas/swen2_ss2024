@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+
 public class EditTourViewModel {
     private static EditTourViewModel instance;
     private final Publisher publisher;
@@ -57,28 +59,30 @@ public class EditTourViewModel {
 
     public void editTour() {
         if (currentTour == null) {
-            System.out.println("Error: No current tour set when trying to edit.");
+            System.out.println("No tour selected to edit.");
             return;
         }
 
-        // Set properties which are bound to UI fields
-        currentTour.setName(name.get());
-        currentTour.setDescription(description.get());
-        currentTour.setFrom(from.get());
-        currentTour.setTo(to.get());
-        currentTour.setTransportType(transportType.get());
-        currentTour.setDistance(distance.get());
-        currentTour.setEstimatedTime(estimatedTime.get());
+        Tour updatedTour = new Tour(
+                name.get(),
+                description.get(),
+                from.get(),
+                to.get(),
+                transportType.get(),
+                distance.get(),
+                estimatedTime.get(),
+                imagePath.get()
+        );
+        updatedTour.setId(currentTour.getId());
 
-        // Update image path separately
-        String updatedImagePath = imagePath.get();
-        System.out.println("Updated Route Information: " + updatedImagePath); // Check if the image path is updated
-        publisher.publish(Event.IMAGE_PATH_UPDATED, updatedImagePath);
-
-        // Notify all observers about the change
-        publisher.publish(Event.TOUR_UPDATED, currentTour);
+        try {
+            com.example.swen2_ss2024.database.Database.updateTour(updatedTour);
+            publisher.publish(Event.TOUR_UPDATED, updatedTour);
+            System.out.println("Tour updated: " + updatedTour.getName());
+        } catch (SQLException e) {
+            System.out.println("Failed to update tour: " + e.getMessage());
+        }
     }
-
 
 
 
