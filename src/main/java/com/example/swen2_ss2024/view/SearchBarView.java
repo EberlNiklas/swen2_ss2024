@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 
 import java.net.URL;
@@ -28,10 +30,19 @@ public class SearchBarView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.searchField.textProperty().bindBidirectional(searchViewModel.searchTextProperty());
         this.searchButton.disableProperty().bind(searchViewModel.searchDisabledProperty());
+
+        searchField.setOnKeyPressed(this::handleKeyPress);
+    }
+
+    private void handleKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ESCAPE) {
+            System.out.println("ESC key pressed"); // Debug statement
+            searchViewModel.resetSearch();
+        }
     }
 
     @FXML
-    public void onSearch(){
+    public void onSearch() {
         this.searchViewModel.search();
     }
 }

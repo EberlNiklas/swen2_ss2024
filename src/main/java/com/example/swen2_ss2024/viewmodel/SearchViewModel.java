@@ -45,6 +45,10 @@ public class SearchViewModel {
         searchText.set("");
     }
 
+    public void resetSearch() {
+        publisher.publish(Event.RESET_SEARCH, null);
+    }
+
     public StringProperty searchTextProperty() {
         return searchText;
     }

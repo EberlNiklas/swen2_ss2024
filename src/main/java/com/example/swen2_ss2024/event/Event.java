@@ -11,6 +11,7 @@ public enum Event {
     TOUR_LOG_EDITED,
     TOUR_LOG_DELETED,
     SEARCH_RESULT,
-    TOUR_LOG_SELECTED;
+    TOUR_LOG_SELECTED,
+    RESET_SEARCH;
 
 }

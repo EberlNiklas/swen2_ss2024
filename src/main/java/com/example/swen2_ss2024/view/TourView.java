@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 
 public class TourView {
@@ -46,5 +48,15 @@ public class TourView {
                 return null;
             }
         }));
+
+        // Add event handler for key press
+        tourList.setOnKeyPressed(this::handleKeyPress);
+
+    }
+
+    private void handleKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ESCAPE) {
+            tourViewModel.showAllTours();
+        }
     }
 }
