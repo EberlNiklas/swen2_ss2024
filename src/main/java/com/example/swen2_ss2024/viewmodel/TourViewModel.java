@@ -15,6 +15,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TourViewModel implements ObjectSubscriber {
     private final NewTourService newTourService;
@@ -29,6 +31,7 @@ public class TourViewModel implements ObjectSubscriber {
         this.newTourService = new NewTourService();
         this.publisher.subscribe(Event.TOUR_ADDED, this);
         this.publisher.subscribe(Event.TOUR_UPDATED, this);  // Subscribe to TOUR_UPDATED events
+        this.publisher.subscribe(Event.SEARCH_RESULT, this);
         this.index.addListener((obs, oldVal, newVal) -> selectTour(newVal.intValue()));
 
         // Load initial data from database
@@ -84,7 +87,7 @@ public class TourViewModel implements ObjectSubscriber {
             Tour tour = (Tour) message;
             switch (publisher.getCurrentEvent()) {
                 case TOUR_ADDED:
-                    tourList.add(tour); // Add the new tour directly to the list
+                    tourList.add(tour);
                     break;
                 case TOUR_UPDATED:
                     for (int i = 0; i < tourList.size(); i++) {
@@ -94,8 +97,19 @@ public class TourViewModel implements ObjectSubscriber {
                         }
                     }
                     break;
+                case SEARCH_RESULT:
+                    tourList.clear();
+                    tourList.add(tour);
+                    break;
             }
         }
+    }
+    public void filterTours(String searchTerm) {
+        Set<Tour> allTours = tourListService.getTours();
+        tourList.clear();
+        tourList.addAll(allTours.stream()
+                .filter(tour -> tour.getName().equalsIgnoreCase(searchTerm))
+                .collect(Collectors.toList()));
     }
 
     public void onMore() {

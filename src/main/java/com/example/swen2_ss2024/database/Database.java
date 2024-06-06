@@ -176,4 +176,33 @@ public class Database {
             return affectedRows > 0;
         }
     }
+
+    public static Tour getTourByName(String name) throws SQLException {
+        String sql = "SELECT * FROM Tour WHERE name = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Tour tour = new Tour(
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("from"),
+                        rs.getString("to"),
+                        rs.getString("transportType"),
+                        rs.getString("distance"),
+                        rs.getString("estimatedTime"),
+                        rs.getString("imagePath")
+                );
+                tour.setId(rs.getInt("id"));
+                return tour;
+            }
+        }
+
+        return null;
+    }
 }

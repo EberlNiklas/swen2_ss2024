@@ -1,9 +1,10 @@
 package com.example.swen2_ss2024;
 
 import com.example.swen2_ss2024.event.Publisher;
+import com.example.swen2_ss2024.service.TourListService;
+import com.example.swen2_ss2024.service.TourLogListService;
 import com.example.swen2_ss2024.view.*;
 import com.example.swen2_ss2024.viewmodel.*;
-import com.example.swen2_ss2024.service.*;
 
 public class ViewFactory {
 
@@ -26,7 +27,7 @@ public class ViewFactory {
         publisher = new Publisher();
         tourListService = new TourListService();
         tourLogListService = new TourLogListService();
-        searchViewModel = new SearchViewModel(publisher);
+        searchViewModel = new SearchViewModel(publisher, tourListService); // Pass tourListService here
         menuViewModel = new MenuViewModel();
         tourViewModel = new TourViewModel(publisher, tourListService);
         tabViewModel = new TabViewModel(publisher);

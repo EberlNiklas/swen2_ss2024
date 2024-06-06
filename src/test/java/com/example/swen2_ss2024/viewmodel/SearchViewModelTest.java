@@ -1,6 +1,7 @@
 package com.example.swen2_ss2024.viewmodel;
 
 import com.example.swen2_ss2024.event.Publisher;
+import com.example.swen2_ss2024.service.TourListService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,8 @@ public class SearchViewModelTest {
     @BeforeEach
     public void beforeEach() {
         publisher = new Publisher();
-        viewModel = new SearchViewModel(publisher);
+        TourListService tourListService = new TourListService();
+        SearchViewModel searchViewModel = new SearchViewModel(publisher, tourListService);
     }
 
     @Test

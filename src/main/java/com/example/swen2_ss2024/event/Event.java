@@ -10,6 +10,7 @@ public enum Event {
     TOUR_LOG_ADDED,
     TOUR_LOG_EDITED,
     TOUR_LOG_DELETED,
+    SEARCH_RESULT,
     TOUR_LOG_SELECTED;
 
 }
