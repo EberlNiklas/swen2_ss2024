@@ -56,7 +56,7 @@ public class TourView {
 
     private void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.ESCAPE) {
-            tourViewModel.showAllTours();
+            tourViewModel.showAllTours(new Object());
         }
     }
 }

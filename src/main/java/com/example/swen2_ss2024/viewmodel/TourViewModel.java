@@ -30,9 +30,9 @@ public class TourViewModel implements ObjectSubscriber {
         this.tourListService = tourListService;
         this.newTourService = new NewTourService();
         this.publisher.subscribe(Event.TOUR_ADDED, this);
-        this.publisher.subscribe(Event.TOUR_UPDATED, this);  // Subscribe to TOUR_UPDATED events
+        this.publisher.subscribe(Event.TOUR_UPDATED, this);
         this.publisher.subscribe(Event.SEARCH_RESULT, this);
-        this.publisher.subscribe(Event.RESET_SEARCH, this);  // Subscribe to RESET_SEARCH events
+        this.publisher.subscribe(Event.RESET_SEARCH, (ObjectSubscriber) this::showAllTours);
         this.index.addListener((obs, oldVal, newVal) -> selectTour(newVal.intValue()));
 
         // Load initial data from database
@@ -102,10 +102,6 @@ public class TourViewModel implements ObjectSubscriber {
                     tourList.clear();
                     tourList.add(tour);
                     break;
-                case RESET_SEARCH:
-                    System.out.println("RESET_SEARCH event received"); // Debug statement
-                    showAllTours();
-                    break;
             }
         }
     }
@@ -140,7 +136,7 @@ public class TourViewModel implements ObjectSubscriber {
         }
     }
 
-    public void showAllTours() {
+    public void showAllTours(Object o) {
         System.out.println("Showing all tours"); // Debug statement
         tourList.clear();
         tourList.addAll(tourListService.getTours());

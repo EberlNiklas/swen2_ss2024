@@ -36,7 +36,7 @@ public class SearchBarView implements Initializable {
 
     private void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.ESCAPE) {
-            System.out.println("ESC key pressed"); // Debug statement
+            System.out.println("ESC key pressed");
             searchViewModel.resetSearch();
         }
     }
