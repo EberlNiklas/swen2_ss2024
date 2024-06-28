@@ -30,15 +30,6 @@ public class SearchBarView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.searchField.textProperty().bindBidirectional(searchViewModel.searchTextProperty());
         this.searchButton.disableProperty().bind(searchViewModel.searchDisabledProperty());
-
-        searchField.setOnKeyPressed(this::handleKeyPress);
-    }
-
-    private void handleKeyPress(KeyEvent event) {
-        if (event.getCode() == KeyCode.ESCAPE) {
-            System.out.println("ESC key pressed");
-            searchViewModel.resetSearch();
-        }
     }
 
     @FXML

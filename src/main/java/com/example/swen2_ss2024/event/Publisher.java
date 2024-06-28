@@ -57,12 +57,12 @@ public class Publisher {
     public void publish(Event event, Object message) {
         List<ObjectSubscriber> subscribers = objectSubscriberMap.get(event);
         this.lastEvent = event;
-        if (null == subscribers) {
+        if (subscribers == null) {
             // TODO: Log this event
             return;
         }
 
-        for (ObjectSubscriber subscriber: subscribers) {
+        for (ObjectSubscriber subscriber : subscribers) {
             subscriber.notify(message);
         }
     }
