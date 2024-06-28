@@ -1,7 +1,7 @@
 package com.example.swen2_ss2024.view;
 
 import com.example.swen2_ss2024.ViewFactory;
-import com.example.swen2_ss2024.models.Tour;
+import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.viewmodel.EditTourViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,16 +31,8 @@ public class EditTourView implements Initializable {
 
     private final EditTourViewModel editTourViewModel;
 
-    public EditTourView() {
-        this.editTourViewModel = EditTourViewModel.getInstance(
-                ViewFactory.getInstance().getPublisher(),
-                ViewFactory.getInstance().getTourListService()
-        );
-    }
-
-    public void setTour(Tour tour) {
-        editTourViewModel.setTour(tour);
-
+    public EditTourView(EditTourViewModel editTourViewModel) {
+        this.editTourViewModel = editTourViewModel;
     }
 
     @Override

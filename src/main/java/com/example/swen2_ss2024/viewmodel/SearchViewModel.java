@@ -1,10 +1,10 @@
 package com.example.swen2_ss2024.viewmodel;
 
 
-import com.example.swen2_ss2024.database.Database;
+import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.Publisher;
-import com.example.swen2_ss2024.models.Tour;
+
 import com.example.swen2_ss2024.service.TourListService;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -33,15 +33,10 @@ public class SearchViewModel {
         }
 
         String searchTerm = searchText.get();
-        try {
-            Tour tour = Database.getTourByName(searchTerm);
+            Tours tour = tourListService.getTourByName(searchTerm);
             if (tour != null) {
                 publisher.publish(Event.SEARCH_RESULT, tour);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         searchText.set("");
     }
 

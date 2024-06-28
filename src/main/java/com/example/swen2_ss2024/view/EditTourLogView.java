@@ -1,7 +1,6 @@
 package com.example.swen2_ss2024.view;
 
-import com.example.swen2_ss2024.models.Tour;
-import com.example.swen2_ss2024.models.TourLog;
+import com.example.swen2_ss2024.entity.TourLog;
 import com.example.swen2_ss2024.viewmodel.EditTourLogViewModel;
 import com.example.swen2_ss2024.viewmodel.EditTourViewModel;
 import javafx.event.EventHandler;
@@ -31,6 +30,7 @@ public class EditTourLogView implements Initializable {
     @FXML private Button editTourLogButton;
 
     public EditTourLogView(EditTourLogViewModel viewModel) {  // Accept viewModel as a constructor parameter
+
         this.viewModel = viewModel;
     }
 
@@ -65,14 +65,9 @@ public class EditTourLogView implements Initializable {
 
     }
 
-
-    public void setTourLog(TourLog tourLog) {
-        viewModel.setTourLog(tourLog);
-    }
-
     @FXML
     public void handleEditTourLog() {
-        viewModel.editTourLog();
+        viewModel.modifyTourLog();
         Stage stage = (Stage) editTourLogButton.getScene().getWindow();
         stage.close();
     }

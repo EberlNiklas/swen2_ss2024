@@ -1,55 +1,76 @@
 package com.example.swen2_ss2024.service;
 
-import com.example.swen2_ss2024.models.Tour;
-import com.example.swen2_ss2024.models.TourLog;
+import com.example.swen2_ss2024.entity.TourLog;
+import com.example.swen2_ss2024.repository.TourLogRepository;
+import com.example.swen2_ss2024.repository.TourRepository;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public class TourLogListService {
 
-    private Set<TourLog> tourLogs = new HashSet<>();
+    private final TourLogRepository tourLogRepository;
+
+    private final TourRepository tourRepository;
+
+
+
+    private boolean selected = false;
+    private TourLog selectedTourLog;
+
+
+
+
+    public TourLogListService(TourLogRepository tourLogRepository, TourRepository tourRepository) {
+        this.tourLogRepository = tourLogRepository;
+        this.tourRepository = tourRepository;
+    }
+
+    //---------FUNCTIONS-------------
 
     public void addTourLog(TourLog tourLog) {
-        System.out.println("Tour added: " + tourLog.getName());
-        this.tourLogs.add(tourLog);
+        tourLogRepository.save(tourLog);
     }
 
-    public Set<TourLog> getTourLogs() {
-        return tourLogs;
-    }
-
-    public TourLog getTourLogsByName(String name) {
-        for (TourLog tourLog : tourLogs) {
-            if (tourLog.getName().equals(name)) {
-                return tourLog;
-            }
-        }
-        return null; // Return null if no tour matches the given name
-    }
-    public boolean deleteTourLogByName(String tourLogName) {
-        Iterator<TourLog> iterator = tourLogs.iterator();
-        while (iterator.hasNext()) {
-            TourLog tourLog = iterator.next();
-            if (tourLog.getName().equals(tourLogName)) {
-                iterator.remove();
-                System.out.println("Tour removed by name: " + tourLogName);
-                return true;
-            }
-        }
-        System.out.println("Tour not found by name: " + tourLogName);
-        return false;
-    }
-
-    public boolean updateTour(TourLog currentTourLog, TourLog updatedTourLog) {
-        if (tourLogs.contains(currentTourLog)) {
-            tourLogs.remove(currentTourLog);
-            tourLogs.add(updatedTourLog);
-            System.out.println("TourLog updated: " + updatedTourLog.getName());
+    public boolean deleteTourById(Long tourLogId) {
+        TourLog tourLog = tourLogRepository.findById(tourLogId);
+        if (tourLog != null) {
+            tourLogRepository.deleteTourLog(tourLog);
             return true;
         }
-        System.out.println("Failed to update, tour not found: " + currentTourLog.getName());
         return false;
     }
+
+    public void modifyTourLog(TourLog newTourLog) {
+        tourLogRepository.modify(newTourLog);
+    }
+
+    public void setSelected(Boolean selected){
+        this.selected = selected;
+    }
+
+    public boolean selected() {return selected;}
+
+    public List<TourLog> getTourLogsByTourName(String tourName) {
+        return tourLogRepository.findByTourName(tourName);
+    }
+
+    public List<TourLog> getAllTourLogs() {
+        return tourLogRepository.findAll();
+    }
+
+    public List<TourLog> getTourLogsByTourId(Long tourId) {
+        return tourLogRepository.findByTourId(tourId);
+    }
+
+    public void setSelectedTourLog(TourLog selectedTourLog) {
+        this.selectedTourLog = selectedTourLog;
+    }
+
+    public TourLog getSelectedTourLog() {
+        return selectedTourLog;
+    }
+
 }

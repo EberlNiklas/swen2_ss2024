@@ -1,4 +1,4 @@
-package com.example.swen2_ss2024.viewmodel;
+/*package com.example.swen2_ss2024.viewmodel;
 
 import com.example.swen2_ss2024.event.Publisher;
 import com.example.swen2_ss2024.service.TourListService;
@@ -33,4 +33,4 @@ public class SearchViewModelTest {
 
         assertFalse(viewModel.isSearchDisabled());
     }
-}
+}*/

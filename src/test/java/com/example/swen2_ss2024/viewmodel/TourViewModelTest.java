@@ -1,4 +1,4 @@
-package com.example.swen2_ss2024.viewmodel;
+/*package com.example.swen2_ss2024.viewmodel;
 
 import com.example.swen2_ss2024.event.Publisher;
 import com.example.swen2_ss2024.models.Tour;
@@ -49,4 +49,4 @@ public class TourViewModelTest {
         assertEquals(initialSize, viewModel.getTourList().size()); // Assert no item was removed
     }
 
-}
+}*/

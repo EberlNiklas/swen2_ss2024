@@ -1,12 +1,12 @@
 package com.example.swen2_ss2024.viewmodel;
 
+import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.ObjectSubscriber;
 import com.example.swen2_ss2024.event.Publisher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.beans.property.SimpleObjectProperty;
-import com.example.swen2_ss2024.models.Tour;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.image.Image;
 
@@ -17,7 +17,7 @@ import static com.example.swen2_ss2024.event.Event.*;
 public class TabViewModel implements ObjectSubscriber {
     private SimpleObjectProperty<Image> routeImage = new SimpleObjectProperty<>();
     private Publisher publisher;
-    private SimpleObjectProperty<Tour> selectedTour = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<Tours> selectedTour = new SimpleObjectProperty<>();
     private ObservableList<String> tourDetails = FXCollections.observableArrayList();
 
     public TabViewModel(Publisher publisher) {
@@ -30,8 +30,8 @@ public class TabViewModel implements ObjectSubscriber {
 
     @Override
     public void notify(Object message) {
-        if (message instanceof Tour) {
-            Tour tour = (Tour) message;
+        if (message instanceof Tours) {
+            Tours tour = (Tours) message;
             switch (publisher.getCurrentEvent()) {
                 case TOUR_SELECTED:
                     selectedTour.set(tour);
@@ -60,7 +60,7 @@ public class TabViewModel implements ObjectSubscriber {
     // method to update tour details
     private void updateTourDetails() {
         tourDetails.clear();
-        Tour tour = selectedTour.get();
+        Tours tour = selectedTour.get();
         if (tour != null) {
             tourDetails.addAll(Arrays.asList(
                     "Name: " + tour.getName(),

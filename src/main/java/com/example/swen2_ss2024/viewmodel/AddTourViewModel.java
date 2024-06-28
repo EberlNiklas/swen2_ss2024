@@ -1,7 +1,6 @@
 package com.example.swen2_ss2024.viewmodel;
 
-import com.example.swen2_ss2024.database.Database;
-import com.example.swen2_ss2024.models.Tour;
+import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.Publisher;
 import com.example.swen2_ss2024.service.TourListService;
@@ -60,14 +59,12 @@ public class AddTourViewModel {
 
     public void addTour() {
         if (!addTourButtonDisabled.get()) {
-            System.out.println("Adding tour Button works");
-            Tour tour = new Tour(
+            Tours tour = new Tours(
                     name.get(), description.get(), from.get(), to.get(),
                     transportType.get(), distance.get(), estimatedTime.get(), imagePath.get()
             );
-            try {
-                int id = Database.saveTour(tour);
-                tour.setId(id);
+
+                tourListService.addTour(tour);
                 publisher.publish(Event.TOUR_ADDED, tour);
 
                 // Clears fields after publishing
@@ -79,9 +76,7 @@ public class AddTourViewModel {
                 distance.set("");
                 estimatedTime.set("");
                 imagePath.set("");
-            } catch (SQLException e) {
-                System.out.println("Failed to save tour: " + e.getMessage());
-            }
+
         }
     }
 

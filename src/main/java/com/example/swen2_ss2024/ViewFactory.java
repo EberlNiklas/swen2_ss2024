@@ -1,6 +1,10 @@
 package com.example.swen2_ss2024;
 
 import com.example.swen2_ss2024.event.Publisher;
+import com.example.swen2_ss2024.repository.TourDatabaseRepository;
+import com.example.swen2_ss2024.repository.TourLogDatabaseRepository;
+import com.example.swen2_ss2024.repository.TourLogRepository;
+import com.example.swen2_ss2024.repository.TourRepository;
 import com.example.swen2_ss2024.service.TourListService;
 import com.example.swen2_ss2024.service.TourLogListService;
 import com.example.swen2_ss2024.view.*;
@@ -23,18 +27,31 @@ public class ViewFactory {
     private final TourListService tourListService;
     private final TourLogListService tourLogListService;
 
+    private final EditTourViewModel editTourViewModel;
+
+    private final TourRepository tourRepository;
+
+    private final TourLogRepository tourLogRepository;
+
+    private final EditTourLogViewModel editTourLogViewModel;
+
     private ViewFactory() {
         publisher = new Publisher();
-        tourListService = new TourListService();
-        tourLogListService = new TourLogListService();
+        tourLogRepository = new TourLogDatabaseRepository();
+        tourRepository = new TourDatabaseRepository();
+        tourListService = new TourListService(tourRepository);
+        tourLogListService = new TourLogListService(tourLogRepository, tourRepository);
         searchViewModel = new SearchViewModel(publisher, tourListService); // Pass tourListService here
         menuViewModel = new MenuViewModel();
-        tourViewModel = new TourViewModel(publisher, tourListService);
+        tourViewModel = new TourViewModel(publisher, tourListService, tourLogListService);
         tabViewModel = new TabViewModel(publisher);
         tourLogsViewModel = new TourLogsViewModel(publisher, tourLogListService);
         addTourViewModel = new AddTourViewModel(publisher, tourListService);
-        addTourLogViewModel = new AddTourLogViewModel(publisher, tourLogListService);
-    }
+        addTourLogViewModel = new AddTourLogViewModel(publisher, tourLogListService, tourListService);
+        editTourViewModel = new EditTourViewModel(publisher, tourListService);
+        editTourLogViewModel = new EditTourLogViewModel(publisher, tourLogListService, tourListService);
+        }
+
 
     public static ViewFactory getInstance() {
         if (instance == null) {
@@ -71,13 +88,13 @@ public class ViewFactory {
             return new AddTourView(addTourViewModel);
         }
         if (EditTourView.class == viewClass) {
-            return new EditTourView(); // Use no-argument constructor
+            return new EditTourView(editTourViewModel); // Use no-argument constructor
         }
         if (AddTourLogView.class == viewClass) {
             return new AddTourLogView(addTourLogViewModel);
         }
         if (EditTourLogView.class == viewClass) {
-            return new EditTourLogView(EditTourLogViewModel.getInstance(publisher, tourLogListService));
+            return new EditTourLogView(editTourLogViewModel);
         }
 
         throw new IllegalArgumentException("Unknown view class: " + viewClass);

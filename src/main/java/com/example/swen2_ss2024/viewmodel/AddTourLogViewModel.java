@@ -1,9 +1,8 @@
 package com.example.swen2_ss2024.viewmodel;
 
+import com.example.swen2_ss2024.entity.TourLog;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.Publisher;
-import com.example.swen2_ss2024.models.Tour;
-import com.example.swen2_ss2024.models.TourLog;
 import com.example.swen2_ss2024.service.TourListService;
 import com.example.swen2_ss2024.service.TourLogListService;
 import javafx.beans.property.BooleanProperty;
@@ -16,6 +15,8 @@ import javafx.collections.ObservableList;
 public class AddTourLogViewModel {
 
     private final TourLogListService tourLogListService;
+
+    private final TourListService tourListService;
 
     private final Publisher publisher;
 
@@ -31,9 +32,10 @@ public class AddTourLogViewModel {
 
     private final ObservableList<String> addedRoutes = FXCollections.observableArrayList();
 
-    public AddTourLogViewModel(Publisher publisher, TourLogListService tourLogListService){
+    public AddTourLogViewModel(Publisher publisher, TourLogListService tourLogListService, TourListService tourListService){
         this.publisher = publisher;
         this.tourLogListService = tourLogListService;
+        this.tourListService = tourListService;
 
         // Listens to changes in fields and update addButtonDisabled property
         name.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
@@ -61,21 +63,21 @@ public class AddTourLogViewModel {
 
     public void addTourLog() {
         if (!addTourLogButtonDisabled.get()) {
-            System.out.println("Adding tourLog Button works");
-            TourLog tourLog = new TourLog(
-                    name.get(), date.get(), duration.get(), distance.get(),
-                    comment.get(), rating.get(), difficulty.get()
-            );
-            tourLogListService.addTourLog(tourLog);
-            publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
+            if (tourListService.selected()) {
+                TourLog tourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+                tourLog.setTour(tourListService.getSelectedTour());
+                tourLogListService.addTourLog(tourLog);
+                publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
 
-            // Clears fields after publishing
-            name.set("");
-            date.set("");
-            duration.set("");
-            distance.set("");
-            comment.set("");
-            rating.set("");
+
+                // Clear fields after publishing
+                name.set("");
+                date.set("");
+                duration.set("");
+                distance.set("");
+
+
+            }
         }
     }
 

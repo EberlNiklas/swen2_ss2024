@@ -1,7 +1,7 @@
 package com.example.swen2_ss2024.view;
 
+import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.viewmodel.TourViewModel;
-import com.example.swen2_ss2024.models.Tour;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -19,7 +19,7 @@ public class TourView {
     @FXML
     private Button buttonMore;
     @FXML
-    private ListView<Tour> tourList;
+    private ListView<String> tourList;
 
     private final TourViewModel tourViewModel;
 
@@ -30,33 +30,11 @@ public class TourView {
     @FXML
     public void initialize() {
         buttonAdd.setOnAction(e -> tourViewModel.onAdd());
-        buttonDelete.setOnAction(e -> tourViewModel.delete());
+        buttonDelete.setOnAction(e -> tourViewModel.deleteSelectedTour());
         buttonMore.setOnAction(e -> tourViewModel.onMore());
 
-        tourList.setItems(tourViewModel.getTourList());
-        tourViewModel.selectIndex().bind(tourList.getSelectionModel().selectedIndexProperty());
+        tourList.setItems(tourViewModel.getTourNames());
+        this.tourViewModel.selectedIndex().bind(tourList.getSelectionModel().selectedIndexProperty());
 
-        // Sets up how each tour is displayed in the ListView
-        tourList.setCellFactory(lv -> new TextFieldListCell<>(new StringConverter<Tour>() {
-            @Override
-            public String toString(Tour tour) {
-                return tour.getName();
-            }
-
-            @Override
-            public Tour fromString(String string) {
-                return null;
-            }
-        }));
-
-        // Add event handler for key press
-        tourList.setOnKeyPressed(this::handleKeyPress);
-
-    }
-
-    private void handleKeyPress(KeyEvent event) {
-        if (event.getCode() == KeyCode.ESCAPE) {
-            tourViewModel.showAllTours(new Object());
-        }
     }
 }

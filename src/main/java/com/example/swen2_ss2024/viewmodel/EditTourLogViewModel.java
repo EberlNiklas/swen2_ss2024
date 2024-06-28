@@ -1,11 +1,12 @@
 package com.example.swen2_ss2024.viewmodel;
 
+import com.example.swen2_ss2024.entity.TourLog;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.Publisher;
-import com.example.swen2_ss2024.models.Tour;
-import com.example.swen2_ss2024.models.TourLog;
 import com.example.swen2_ss2024.service.TourListService;
 import com.example.swen2_ss2024.service.TourLogListService;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -13,7 +14,9 @@ public class EditTourLogViewModel {
 
     private static EditTourLogViewModel instance;
     private final Publisher publisher;
-    private final TourLogListService tourListService;
+    private final TourLogListService tourLogListService;
+
+    private final TourListService tourListService;
 
     private TourLog currentTourLog;
 
@@ -25,60 +28,45 @@ public class EditTourLogViewModel {
     private final StringProperty comment = new SimpleStringProperty("");
     private final StringProperty rating = new SimpleStringProperty("");
     private final StringProperty difficulty = new SimpleStringProperty("");
+    private final BooleanProperty modifyTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
     // Private constructor
-    private EditTourLogViewModel(Publisher publisher, TourLogListService tourLogListService) {
+    public EditTourLogViewModel(Publisher publisher, TourLogListService tourLogListService, TourListService tourListService) {
+
         this.publisher = publisher;
-        this.tourListService = tourLogListService;
+        this.tourLogListService = tourLogListService;
+        this.tourListService = tourListService;
+
+        // Listen to changes in fields and update addButtonDisabled property
+        name.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
+        date.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
+        duration.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
+        distance.addListener((observable, oldValue, newValue) -> updateAddTourLogButtonDisabled());
     }
 
-    // instance method with dependency parameters
-    public static synchronized EditTourLogViewModel getInstance(Publisher publisher, TourLogListService tourLogListService) {
-        if (instance == null) {
-            instance = new EditTourLogViewModel(publisher, tourLogListService);
+
+
+
+    private void updateAddTourLogButtonDisabled() {
+        // Check if any of the fields are empty
+        modifyTourLogButtonDisabled.set(name.get().isEmpty() || date.get().isEmpty() ||
+                duration.get().isEmpty() || distance.get().isEmpty());
+    }
+
+
+    public void modifyTourLog() {
+        if(!modifyTourLogButtonDisabled.get()){
+            if(tourLogListService.selected()){
+                TourLog currentlySelected = tourLogListService.getSelectedTourLog();
+                Long id = currentlySelected.getId();
+                TourLog newTourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+                newTourLog.setId(id);
+                tourLogListService.modifyTourLog(newTourLog);
+
+            }
+
         }
-        return instance;
     }
-
-    public void setTourLog(TourLog tourLog) {
-        if (tourLog == null) {
-            System.out.println("Attempt to set null tour log.");
-            return;
-        }
-        this.currentTourLog = tourLog;
-        name.set(tourLog.getName());
-        date.set(tourLog.getDate());
-        duration.set(tourLog.getDuration());
-        distance.set(tourLog.getDistance());
-        comment.set(tourLog.getComment());
-        rating.set(tourLog.getRating());
-        difficulty.set(tourLog.getDifficulty());
-        System.out.println("Setting current tour log: " + tourLog.getName());
-    }
-
-    public void editTourLog() {
-        if (currentTourLog == null) {
-            System.out.println("Error: No current tour log set when trying to edit.");
-            return;
-        }
-
-        // Set properties which are bound to UI fields
-        currentTourLog.setName(name.get());
-        currentTourLog.setDate(date.get());
-        currentTourLog.setDuration(duration.get());
-        currentTourLog.setDistance(distance.get());
-        currentTourLog.setComment(comment.get());
-        currentTourLog.setRating(rating.get());
-        currentTourLog.setDifficulty(difficulty.get());
-
-        // Notify all observers about the change
-        publisher.publish(Event.TOUR_LOG_EDITED, currentTourLog);
-    }
-
-
-
-
-
 
     public StringProperty nameProperty() { return name; }
     public StringProperty dateProperty() { return date; }
