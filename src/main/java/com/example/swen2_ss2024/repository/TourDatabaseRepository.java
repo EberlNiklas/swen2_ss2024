@@ -32,20 +32,26 @@ public class TourDatabaseRepository implements TourRepository {
             }
         }
 
-        @Override
-        public Tours save(Tours entity) {
-            try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-                EntityTransaction transaction = entityManager.getTransaction();
-                transaction.begin();
-                entityManager.persist(entity);
-                transaction.commit();
-            } catch (Exception e) {
-                throw e;
-            }
-            return entity;
-        }
+    @Override
+    public Tours save(Tours entity) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
 
-        @Override
+            if (isTableEmpty()) {
+                resetAutoIncrement();
+            }
+
+            entityManager.persist(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            throw e;
+        }
+        return entity;
+    }
+
+
+    @Override
         public Optional<Tours> findByName(String name) {
             try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
                 CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -136,8 +142,28 @@ public class TourDatabaseRepository implements TourRepository {
             }
         }
 
+    private boolean isTableEmpty() {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+            Root<Tours> root = criteriaQuery.from(Tours.class);
+            criteriaQuery.select(criteriaBuilder.count(root));
+            Long count = entityManager.createQuery(criteriaQuery).getSingleResult();
+            return count == 0;
+        }
+    }
 
-        @Override
+    private void resetAutoIncrement() {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.createNativeQuery("ALTER SEQUENCE t_tours_id_seq RESTART WITH 1").executeUpdate();
+            transaction.commit();
+        }
+    }
+
+
+    @Override
         public void deleteByName(String name) {
             try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
                 EntityTransaction transaction = entityManager.getTransaction();
