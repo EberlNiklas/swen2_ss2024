@@ -1,14 +1,9 @@
 package com.example.swen2_ss2024.view;
 
-import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.viewmodel.TourViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.util.StringConverter;
 
 public class TourView {
 
@@ -36,5 +31,10 @@ public class TourView {
         tourList.setItems(tourViewModel.getTourNames());
         this.tourViewModel.selectedIndex().bind(tourList.getSelectionModel().selectedIndexProperty());
 
+        tourList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                tourViewModel.selectTour(newVal);
+            }
+        });
     }
 }

@@ -1,6 +1,5 @@
 package com.example.swen2_ss2024.viewmodel;
 
-import com.example.swen2_ss2024.ViewFactory;
 import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.ObjectSubscriber;
@@ -8,15 +7,10 @@ import com.example.swen2_ss2024.event.Publisher;
 import com.example.swen2_ss2024.service.NewTourService;
 import com.example.swen2_ss2024.service.TourListService;
 import com.example.swen2_ss2024.service.TourLogListService;
-import com.example.swen2_ss2024.view.EditTourView;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.sql.SQLException;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class TourViewModel implements ObjectSubscriber {
     private final NewTourService newTourService;
@@ -24,7 +18,6 @@ public class TourViewModel implements ObjectSubscriber {
     private final IntegerProperty index = new SimpleIntegerProperty();
     private final Publisher publisher;
     private final TourListService tourListService;
-
     private final TourLogListService tourLogListService;
 
     public TourViewModel(Publisher publisher, TourListService tourListService, TourLogListService tourLogListService) {
@@ -35,16 +28,10 @@ public class TourViewModel implements ObjectSubscriber {
         this.publisher.subscribe(Event.TOUR_ADDED, this);
         this.publisher.subscribe(Event.TOUR_UPDATED, this);
         this.publisher.subscribe(Event.SEARCH_RESULT, this);
-        this.index.addListener((obs, oldVal, newVal) -> selectTour(newVal.intValue()));
+        this.index.addListener((obs, oldVal, newVal) -> selectTourByIndex(newVal.intValue()));
 
         // Load initial data from database
         loadToursFromDatabase();
-    }
-
-    private void loadToursFromDatabase() {
-        tourList.clear();
-        for(Tours tour : tourListService.getTours())
-            tourList.add(tour.getName());
     }
 
     public void onAdd() {
@@ -52,7 +39,6 @@ public class TourViewModel implements ObjectSubscriber {
     }
 
     public void onMore() {
-        // Obtains the selected Tour
         newTourService.loadFXML("edit-tour-view.fxml");
     }
 
@@ -68,19 +54,27 @@ public class TourViewModel implements ObjectSubscriber {
         return null;
     }
 
-    private void selectTour(int index) {
+    public void selectTourByIndex(int index) {
+        if (index >= 0 && index < tourList.size()) {
             String tourName = tourList.get(index);
-            Tours tour = tourListService.getTourByName(tourName);
-            tourListService.setSelected(true);
-            tourListService.setSelectedTour(tour);
-
-            Long dbindex = getPKTour(); // Ensure this is not null
-
-            if (dbindex != null) {
-                tourLogListService.getTourLogsByTourName(tourName);
-                publisher.publish(Event.SELECTED_TOUR_CHANGED, dbindex);
-            }
+            selectTour(tourName);
         }
+    }
+
+    private void loadToursFromDatabase() {
+        tourList.clear();
+        for (Tours tour : tourListService.getTours()) {
+            tourList.add(tour.getName());
+        }
+    }
+
+
+    public void selectTour(String tourName) { // Change access to public
+        Tours tour = tourListService.getTourByName(tourName);
+        if (tour != null) {
+            publisher.publish(Event.TOUR_SELECTED, tour);
+        }
+    }
 
     public void addToTourList(String tourName) {
         tourList.add(tourName);
@@ -103,7 +97,6 @@ public class TourViewModel implements ObjectSubscriber {
             }
         }
     }
-
 
     @Override
     public void notify(Object message) {
