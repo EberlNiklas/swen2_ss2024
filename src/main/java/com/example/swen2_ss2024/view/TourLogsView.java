@@ -43,28 +43,26 @@ public class TourLogsView{
 
     private final TourLogsViewModel tourLogsViewModel;
 
+
     public TourLogsView(TourLogsViewModel tourLogsViewModel) {
         this.tourLogsViewModel = tourLogsViewModel;
     }
 
     @FXML
     public void initialize() {
-        tourLogAdd.setOnAction(e -> {
-            // Replace these parameters with the actual values
-            nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-            dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
-            distanceColumn.setCellValueFactory(cellData -> cellData.getValue().distanceProperty());
-            durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
-            ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
-            infoColumn.setCellValueFactory(cellData -> cellData.getValue().infoProperty());
-        });
+        tourLogAdd.setOnAction(e -> tourLogsViewModel.onAdd());
+        tourLogEdit.setOnAction(e -> tourLogsViewModel.onMore());
         tourLogDelete.setOnAction(e -> tourLogsViewModel.delete());
 
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+        distanceColumn.setCellValueFactory(cellData -> cellData.getValue().distanceProperty());
+        durationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
+        ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
+        infoColumn.setCellValueFactory(cellData -> cellData.getValue().infoProperty());
 
         tourLogList.setItems(tourLogsViewModel.getTourLogs());
         tourLogsViewModel.selectedAddTourProperty().bind(tourLogList.getSelectionModel().selectedIndexProperty());
-
-        // Sets up how each tour is displayed in the ListView
 
     }
 }

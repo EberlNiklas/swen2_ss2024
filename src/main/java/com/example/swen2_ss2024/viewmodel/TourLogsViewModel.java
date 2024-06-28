@@ -25,10 +25,12 @@ public class TourLogsViewModel implements ObjectSubscriber {
     private TourLogListService tourLogListService;
     private Publisher publisher;
 
+    private NewTourLogService newTourLogService;
+
     public TourLogsViewModel(Publisher publisher, TourLogListService tourLogListService) {
         this.publisher = publisher;
         this.tourLogListService = tourLogListService;
-
+        this.newTourLogService = new NewTourLogService();
         // Subscribe this ViewModel to the TOUR_LOG_ADDED event
         this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateTourLogs);
         this.publisher.subscribe(Event.TOUR_LOG_ADDED, (ObjectSubscriber) this::addToTourLogs);
@@ -45,6 +47,14 @@ public class TourLogsViewModel implements ObjectSubscriber {
         List<TourLog> logs = tourLogListService.getAllTourLogs();
         tourLogList.clear();
         tourLogList.addAll(logs);
+    }
+
+    public void onAdd(){
+        newTourLogService.loadFXML("add-tour-log-view.fxml");
+    }
+
+    public void onMore(){
+        newTourLogService.loadFXML("edit-tour-log-view.fxml");
     }
 
     public void addToTourLogs(Object message) {
