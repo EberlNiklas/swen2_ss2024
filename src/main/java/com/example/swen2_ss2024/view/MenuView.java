@@ -29,5 +29,4 @@ public class MenuView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-
 }

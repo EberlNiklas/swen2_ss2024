@@ -62,29 +62,34 @@ public class TourLogDatabaseRepository implements TourLogRepository {
             Root<TourLog> root = criteriaQuery.from(TourLog.class);
             criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("tour").get("id"), tourId));
             List<TourLog> tourLogs = entityManager.createQuery(criteriaQuery).getResultList();
+            logger.info("Found {} tour logs for tour id: {}", tourLogs.size(), tourId);
             return tourLogs;
         } catch (Exception e) {
+            logger.error("Error finding tour logs by tour id: {}", tourId, e);
             throw e;
         }
     }
 
     @Override
     public List<TourLog> findByTourName(String tourName) {
+        logger.debug("Attempt to find tour logs by tour name: {}", tourName);
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<TourLog> criteriaQuery = criteriaBuilder.createQuery(TourLog.class);
             Root<TourLog> root = criteriaQuery.from(TourLog.class);
             criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("tour").get("name"), tourName));
             List<TourLog> tourLogs = entityManager.createQuery(criteriaQuery).getResultList();
+            logger.info("Found {} tour logs for tour name: {}", tourName);
             return tourLogs;
         } catch (Exception e) {
+            logger.error("Error finding tour logs by tour name: {}", tourName, e);
             throw e;
         }
     }
 
     @Override
     public TourLog findById(Long id) {
-
+        logger.debug("Attempt to find tour log by id: {}", id);
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             TourLog tourLog = entityManager.find(TourLog.class, id);
             return tourLog;
@@ -95,27 +100,30 @@ public class TourLogDatabaseRepository implements TourLogRepository {
 
     @Override
     public void deleteTourLog(TourLog tourLog) {
+        logger.debug("Attempt to delete tour log: {}", tourLog);
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
 
-            // Finden und löschen des TourLog
+            //Find and delete Tour log
             TourLog attachedTourLog = entityManager.find(TourLog.class, tourLog.getId());
             if (attachedTourLog != null) {
-                // Entfernen des TourLog aus der Tour-Entität
+                //Deleting Tour log from Entity
                 Tours tour = attachedTourLog.getTour();
                 if (tour != null) {
                     tour.getTourLogs().remove(attachedTourLog);
-                    entityManager.merge(tour);  // Speichern der Änderungen an der Tour
+                    entityManager.merge(tour);  // Saving changes
                 }
                 entityManager.remove(attachedTourLog);
+                logger.info("Deleted tour log: {}", tourLog);
             }
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
+            logger.warn("No tour log found to delete: {}", tourLog);
             throw e;
         } finally {
             entityManager.close();
@@ -124,6 +132,7 @@ public class TourLogDatabaseRepository implements TourLogRepository {
 
     @Override
     public void modify(TourLog tourLog) {
+        logger.debug("Attempt to modify tour log: {}", tourLog);
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
             try {
@@ -135,12 +144,16 @@ public class TourLogDatabaseRepository implements TourLogRepository {
                     existingTourLog.setRating(tourLog.getRating());
                     existingTourLog.setInfo(tourLog.getInfo());
                     entityManager.merge(existingTourLog);
+                    transaction.commit();
+                } else {
+                    logger.warn("No tour log found to modify: {}", tourLog);
                 }
-                transaction.commit();
+
             } catch (Exception e) {
                 if (transaction.isActive()) {
                     transaction.rollback();
                 }
+                logger.error("Error modifying tour log: {}", tourLog, e);
                 throw e;
             }
         }

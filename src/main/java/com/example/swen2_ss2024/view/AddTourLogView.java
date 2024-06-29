@@ -33,10 +33,6 @@ public class AddTourLogView implements Initializable {
     @FXML
     private TextField ratingField;
 
-
-
-
-
     public AddTourLogView(AddTourLogViewModel viewModel) {
         this.viewModel = viewModel;
     }
@@ -54,7 +50,6 @@ public class AddTourLogView implements Initializable {
         // Binding of button disable property
         addTourLogButton.disableProperty().bind(viewModel.addTourLogButtonDisabledProperty());
     }
-
     @FXML
     public void addTourLog() {
         viewModel.addTourLog();

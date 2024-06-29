@@ -62,7 +62,12 @@ public class TourDatabaseRepository implements TourRepository {
             Root<Tours> root = criteriaQuery.from(Tours.class);
             criteriaQuery.select(criteriaBuilder.count(root));
             Long count = entityManager.createQuery(criteriaQuery).getSingleResult();
+            logger.debug("Table empty check, count: {}", count);
             return count == 0;
+        }
+        catch (Exception e) {
+            logger.error("Error checking if table is empty", e);
+            throw e;
         }
     }
 
@@ -72,6 +77,11 @@ public class TourDatabaseRepository implements TourRepository {
             transaction.begin();
             entityManager.createNativeQuery("ALTER SEQUENCE t_tours_id_seq RESTART WITH 1").executeUpdate();
             transaction.commit();
+            logger.info("Auto increment reset");
+        }
+        catch (Exception e) {
+            logger.error("Error resetting auto increment", e);
+            throw e;
         }
     }
 
@@ -146,6 +156,11 @@ public class TourDatabaseRepository implements TourRepository {
             entity.setImagePath(url.toString());
             entityManager.merge(entity);
             transaction.commit();
+            logger.info("Saved tour URL for tour: {}", entity.getName());
+        }
+        catch (Exception e) {
+            logger.error("Error saving tour URL for tour: {}", entity.getName(), e);
+            throw e;
         }
     }
     @Override
@@ -156,6 +171,11 @@ public class TourDatabaseRepository implements TourRepository {
             entity.setDistance(String.valueOf(distance));
             entityManager.merge(entity);
             transaction.commit();
+            logger.info("Saved tour distance for tour: {}", entity.getName());
+        }
+        catch (Exception e) {
+            logger.error("Error saving tour distance for tour: {}", entity.getName(), e);
+            throw e;
         }
     }
     @Override
@@ -166,6 +186,11 @@ public class TourDatabaseRepository implements TourRepository {
             entity.setEstimatedTime(String.valueOf(duration));
             entityManager.merge(entity);
             transaction.commit();
+            logger.info("Saved tour duration for tour: {}", entity.getName());
+        }
+        catch (Exception e) {
+            logger.error("Error saving tour duration for tour: {}", entity.getName(), e);
+            throw e;
         }
     }
 

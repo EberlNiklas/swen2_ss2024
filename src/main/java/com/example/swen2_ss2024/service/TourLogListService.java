@@ -4,20 +4,15 @@ import com.example.swen2_ss2024.entity.TourLog;
 import com.example.swen2_ss2024.repository.TourLogRepository;
 import com.example.swen2_ss2024.repository.TourRepository;
 
+
 import java.util.List;
 
 public class TourLogListService {
 
     private final TourLogRepository tourLogRepository;
-
     private final TourRepository tourRepository;
-
-
-
     private boolean selected = false;
     private TourLog selectedTourLog;
-
-
 
 
     public TourLogListService(TourLogRepository tourLogRepository, TourRepository tourRepository) {
@@ -25,9 +20,9 @@ public class TourLogListService {
         this.tourRepository = tourRepository;
     }
 
-    //---------FUNCTIONS-------------
 
     public void addTourLog(TourLog tourLog) {
+
         tourLogRepository.save(tourLog);
     }
 
