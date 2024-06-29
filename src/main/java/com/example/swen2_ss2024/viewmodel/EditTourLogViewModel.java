@@ -1,7 +1,6 @@
 package com.example.swen2_ss2024.viewmodel;
 
 import com.example.swen2_ss2024.entity.TourLog;
-import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.Publisher;
 import com.example.swen2_ss2024.service.TourListService;
 import com.example.swen2_ss2024.service.TourLogListService;
@@ -61,7 +60,7 @@ public class EditTourLogViewModel {
                 Long id = currentlySelected.getId();
                 TourLog newTourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
                 newTourLog.setId(id);
-                tourLogListService.modifyTourLog(newTourLog);
+                tourLogListService.editTourLog(newTourLog);
 
             }
 

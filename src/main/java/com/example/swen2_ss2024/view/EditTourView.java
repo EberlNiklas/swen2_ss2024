@@ -3,9 +3,13 @@ package com.example.swen2_ss2024.view;
 import com.example.swen2_ss2024.ViewFactory;
 import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.viewmodel.EditTourViewModel;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,6 +32,8 @@ public class EditTourView implements Initializable {
     private TextField estimatedTimeField;
     @FXML
     private TextField imagePathField;
+    @FXML
+    private Button editTourButton;
 
     private final EditTourViewModel editTourViewModel;
 
@@ -37,7 +43,19 @@ public class EditTourView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        bindFields();
+        nameField.textProperty().bindBidirectional(editTourViewModel.nameProperty());
+        descriptionField.textProperty().bindBidirectional(editTourViewModel.descriptionProperty());
+        fromField.textProperty().bindBidirectional(editTourViewModel.fromProperty());
+        toField.textProperty().bindBidirectional(editTourViewModel.toProperty());
+        transportTypeField.textProperty().bindBidirectional(editTourViewModel.transportTypeProperty());
+        distanceField.textProperty().bindBidirectional(editTourViewModel.distanceProperty());
+        estimatedTimeField.textProperty().bindBidirectional(editTourViewModel.estimatedTimeProperty());
+        imagePathField.textProperty().bindBidirectional(editTourViewModel.imagePathProperty());
+        editTourButton.disableProperty().bind(editTourViewModel.editTourButtonDisabledProperty());
+    }
+
+    public void setTour(Tours tour) {
+        editTourViewModel.setTour(tour);
     }
 
     @FXML
@@ -47,16 +65,5 @@ public class EditTourView implements Initializable {
             return;
         }
         editTourViewModel.editTour();
-    }
-
-    private void bindFields() {
-        nameField.textProperty().bindBidirectional(editTourViewModel.nameProperty());
-        descriptionField.textProperty().bindBidirectional(editTourViewModel.descriptionProperty());
-        fromField.textProperty().bindBidirectional(editTourViewModel.fromProperty());
-        toField.textProperty().bindBidirectional(editTourViewModel.toProperty());
-        transportTypeField.textProperty().bindBidirectional(editTourViewModel.transportTypeProperty());
-        distanceField.textProperty().bindBidirectional(editTourViewModel.distanceProperty());
-        estimatedTimeField.textProperty().bindBidirectional(editTourViewModel.estimatedTimeProperty());
-        imagePathField.textProperty().bindBidirectional(editTourViewModel.imagePathProperty());
     }
 }

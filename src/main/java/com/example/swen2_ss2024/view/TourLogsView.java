@@ -16,7 +16,7 @@ import javafx.util.StringConverter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TourLogsView{
+public class TourLogsView implements Initializable{
 
     @FXML
     private Button tourLogAdd;
@@ -48,8 +48,8 @@ public class TourLogsView{
         this.tourLogsViewModel = tourLogsViewModel;
     }
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         tourLogAdd.setOnAction(e -> tourLogsViewModel.onAdd());
         tourLogEdit.setOnAction(e -> tourLogsViewModel.onMore());
         tourLogDelete.setOnAction(e -> tourLogsViewModel.delete());

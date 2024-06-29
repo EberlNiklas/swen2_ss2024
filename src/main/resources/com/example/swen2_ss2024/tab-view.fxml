@@ -11,28 +11,28 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.swen2_ss2024.view.TabView">
-        <TabPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
-            <tabs>
-                <Tab text="General" closable="false">
-                    <!-- General content -->
-                    <ListView fx:id="tourDetailsList" VBox.vgrow="ALWAYS">
-                        <!---->
-                    </ListView>
-                </Tab>
-                <Tab text="Route" closable="false">
-                    <VBox fx:id="routeContainer" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                        <ImageView fx:id="routeImageView" preserveRatio="true"/>
-                    </VBox>
-                </Tab>
-                <Tab text="Misc" closable="false">
-                    <!-- Misc content -->
-                    <ListView fx:id="MiscContent">
-                        <!---->
-                    </ListView>
-                </Tab>
+    <TabPane HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" >
+        <tabs>
+            <Tab text="General" closable="false">
+                <!-- General content -->
+                <ListView fx:id="tourDetailsList" VBox.vgrow="ALWAYS">
+                    <!---->
+                </ListView>
+            </Tab>
+            <Tab text="Route" closable="false">
+                <VBox fx:id="routeContainer" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                    <ImageView fx:id="routeImageView" preserveRatio="true"/>
+                </VBox>
+            </Tab>
+            <Tab text="Misc" closable="false">
+                <!-- Misc content -->
+                <ListView fx:id="MiscContent">
+                    <!---->
+                </ListView>
+            </Tab>
 
-            </tabs>
+        </tabs>
 
-        </TabPane>
-    </VBox>
+    </TabPane>
+</VBox>
 

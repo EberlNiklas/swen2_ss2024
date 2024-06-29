@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class EditTourViewModel {
@@ -18,7 +19,6 @@ public class EditTourViewModel {
     private final TourListService tourListService;
 
     private Tours currentTour;
-
 
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty description = new SimpleStringProperty("");
@@ -35,23 +35,69 @@ public class EditTourViewModel {
     public EditTourViewModel(Publisher publisher, TourListService tourListService) {
         this.publisher = publisher;
         this.tourListService = tourListService;
+
+        name.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
+        description.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
+        from.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
+        to.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
+        transportType.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
+        distance.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
+        estimatedTime.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
+        imagePath.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
+
+        updateEditTourButtonDisabled();
+    }
+
+    private void updateEditTourButtonDisabled() {
+        boolean anyFieldEmpty = name.get().isEmpty() || description.get().isEmpty() ||
+                from.get().isEmpty() || to.get().isEmpty() ||
+                transportType.get().isEmpty() || distance.get().isEmpty() ||
+                estimatedTime.get().isEmpty() || imagePath.get().isEmpty();
+
+        System.out.println("Fields Empty: " + anyFieldEmpty); // Debug output
+        System.out.println("Route Information: " + imagePath.get()); // Additional debug for image path
+        editTourButtonDisabled.set(anyFieldEmpty);
+    }
+
+    public void setTour(Tours tour) {
+        if (tour == null) {
+            System.out.println("Attempt to set null tour.");
+            return;
+        }
+        this.currentTour = tour;
+        name.set(tour.getName());
+        description.set(tour.getDescription());
+        from.set(tour.getFrom());
+        to.set(tour.getTo());
+        transportType.set(tour.getTransportType());
+        distance.set(tour.getDistance());
+        estimatedTime.set(tour.getEstimatedTime());
+        System.out.println("Setting current tour: " + tour.getName());
     }
 
     public void editTour() {
-        if (!editTourButtonDisabled.get()) {
-            if (tourListService.selected()) {
-                Tours toursSelected = tourListService.getSelectedTour();
-                Tours newTour = new Tours(toursSelected.getName(), description.get(), from.get(), to.get(), transportType.get(), distance.get(), estimatedTime.get(), imagePath.get());
-                Long id = toursSelected.getId();
-                newTour.setId(id);
-                tourListService.editTour(newTour);
-            }
+        if (currentTour == null) {
+            System.out.println("No tour selected to edit.");
+            return;
         }
+
+        Tours updatedTour = new Tours(
+                name.get(),
+                description.get(),
+                from.get(),
+                to.get(),
+                transportType.get(),
+                distance.get(),
+                estimatedTime.get(),
+                imagePath.get()
+        );
+        updatedTour.setId(currentTour.getId());
+
+
+        tourListService.updateTour(updatedTour);
+        publisher.publish(Event.TOUR_UPDATED, updatedTour);
+        System.out.println("Tour updated: " + updatedTour.getName());
     }
-
-
-
-
 
     public StringProperty nameProperty() { return name; }
     public StringProperty descriptionProperty() { return description; }
@@ -63,6 +109,12 @@ public class EditTourViewModel {
     public StringProperty imagePathProperty() {
         return imagePath;
     }
+
+    public BooleanProperty editTourButtonDisabledProperty() {
+        return editTourButtonDisabled;
+    }
+
+
 
     public void setImagePath(String path) {
         if (path != null && !path.isEmpty() && !path.equals(imagePath.get())) {

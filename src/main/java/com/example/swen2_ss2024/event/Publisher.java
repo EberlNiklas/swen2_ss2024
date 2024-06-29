@@ -62,7 +62,7 @@ public class Publisher {
             return;
         }
 
-        for (ObjectSubscriber subscriber : subscribers) {
+        for (ObjectSubscriber subscriber: subscribers) {
             subscriber.notify(message);
         }
     }

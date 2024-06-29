@@ -22,7 +22,7 @@ public class TabViewModel implements ObjectSubscriber {
         this.publisher.subscribe(Event.TOUR_DELETED, this);
         this.publisher.subscribe(Event.TOUR_UPDATED, this);
         this.publisher.subscribe(Event.IMAGE_PATH_UPDATED, this);
-        this.publisher.subscribe(Event.RESET_SEARCH, this);  // Subscribe to RESET_SEARCH event
+        this.publisher.subscribe(Event.RESET_SEARCH, this);
     }
 
     @Override
@@ -51,6 +51,8 @@ public class TabViewModel implements ObjectSubscriber {
             clearRouteImage();
         }
     }
+
+
 
     private void updateTourDetails(Tours tour) {
         tourDetails.clear();

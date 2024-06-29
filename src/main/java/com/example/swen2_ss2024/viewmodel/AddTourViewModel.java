@@ -52,8 +52,6 @@ public class AddTourViewModel {
                 transportType.get().isEmpty() || distance.get().isEmpty() ||
                 estimatedTime.get().isEmpty() || imagePath.get().isEmpty();
 
-        System.out.println("Fields Empty: " + anyFieldEmpty); // Debug output
-        System.out.println("Route Information: " + imagePath.get()); // Additional debug for image path
         addTourButtonDisabled.set(anyFieldEmpty);
     }
 
@@ -64,18 +62,18 @@ public class AddTourViewModel {
                     transportType.get(), distance.get(), estimatedTime.get(), imagePath.get()
             );
 
-                tourListService.addTour(tour);
-                publisher.publish(Event.TOUR_ADDED, tour);
+            tourListService.addTour(tour);
+            publisher.publish(Event.TOUR_ADDED, tour);
 
-                // Clears fields after publishing
-                name.set("");
-                description.set("");
-                from.set("");
-                to.set("");
-                transportType.set("");
-                distance.set("");
-                estimatedTime.set("");
-                imagePath.set("");
+            // Clears fields after publishing
+            name.set("");
+            description.set("");
+            from.set("");
+            to.set("");
+            transportType.set("");
+            distance.set("");
+            estimatedTime.set("");
+            imagePath.set("");
 
         }
     }

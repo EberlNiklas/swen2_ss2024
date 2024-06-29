@@ -25,20 +25,15 @@ public class AddTourLogView implements Initializable {
     private TextField dateField;
 
     @FXML
-    private TextField durationField;
-
-    @FXML
-    private TextField distanceField;
-
-    @FXML
-    private TextField commentField;
+    private TextField infoField;
 
     @FXML
     private Button addTourLogButton;
+
     @FXML
     private TextField ratingField;
-    @FXML
-    private TextField difficultyField;
+
+
 
 
 
@@ -52,11 +47,10 @@ public class AddTourLogView implements Initializable {
         // Binding of the properties to the text fields
         nameField.textProperty().bindBidirectional(viewModel.nameProperty());
         dateField.textProperty().bindBidirectional(viewModel.dateProperty());
-        durationField.textProperty().bindBidirectional(viewModel.durationProperty());
-        distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
-        commentField.textProperty().bindBidirectional(viewModel.commentProperty());
+        infoField.textProperty().bindBidirectional(viewModel.infoProperty());
         ratingField.textProperty().bindBidirectional(viewModel.ratingProperty());
-        difficultyField.textProperty().bindBidirectional(viewModel.difficultyProperty());
+
+
         // Binding of button disable property
         addTourLogButton.disableProperty().bind(viewModel.addTourLogButtonDisabledProperty());
     }

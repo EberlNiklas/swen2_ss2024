@@ -5,6 +5,7 @@ module com.example.swen2_ss2024 {
     requires java.sql;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
+    requires org.apache.logging.log4j;
 
     opens com.example.swen2_ss2024.entity to org.hibernate.orm.core;
     opens com.example.swen2_ss2024 to javafx.fxml;

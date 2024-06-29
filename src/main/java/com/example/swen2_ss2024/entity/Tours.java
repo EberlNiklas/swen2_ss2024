@@ -16,31 +16,31 @@ public class Tours {
     private Long id;
 
     @Column(name = "name")
-    @JsonProperty("name")
+    @com.fasterxml.jackson.annotation.JsonProperty("name")
     private String name;
 
     @Column(name = "description")
-    @JsonProperty("description")
+    @com.fasterxml.jackson.annotation.JsonProperty("description")
     private String description;
 
     @Column(name = "from_destination")
-    @JsonProperty("from")
+    @com.fasterxml.jackson.annotation.JsonProperty("from")
     private String from;
 
     @Column(name = "to_destination")
-    @JsonProperty("to")
+    @com.fasterxml.jackson.annotation.JsonProperty("to")
     private String to;
 
     @Column(name = "transport_type")
-    @JsonProperty("transport_type")
+    @com.fasterxml.jackson.annotation.JsonProperty("transport_type")
     private String transportType;
 
     @Column(name = "distance")
-    @JsonProperty("distance")
+    @com.fasterxml.jackson.annotation.JsonProperty("distance")
     private String distance;
 
     @Column(name = "estimated_time")
-    @JsonProperty("estimated_time")
+    @com.fasterxml.jackson.annotation.JsonProperty("estimated_time")
     private String estimatedTime;
 
     @Column(name = "route_information")
@@ -51,8 +51,6 @@ public class Tours {
     @Lob
     private byte[] tourImage;
 
-
-
     @OneToMany(
             targetEntity = TourLog.class,
             mappedBy = "tour",
@@ -61,9 +59,8 @@ public class Tours {
 
     private List<TourLog> tourLogs = new ArrayList<>();
 
+    public Tours(){
 
-    // Default constructor
-    public Tours() {
     }
 
     public Tours(String name, String description, String from, String to, String transportType, String distance, String estimatedTime, String imagePath) {
@@ -76,21 +73,21 @@ public class Tours {
         this.estimatedTime = estimatedTime;
         this.imagePath = imagePath;
     }
-    public byte[] getTourImage() {
-        return tourImage;
-    }
-
-    public void setTourImage(byte[] tourImage) {
-        this.tourImage = tourImage;
-    }
-
-    // Getter and Setter methods
+    // Property getter
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public byte[] getTourImage() {
+        return tourImage;
+    }
+
+    public void setTourImage(byte[] tourImage) {
+        this.tourImage = tourImage;
     }
 
     public String getName() {

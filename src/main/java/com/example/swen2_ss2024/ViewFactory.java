@@ -35,6 +35,7 @@ public class ViewFactory {
 
     private final EditTourLogViewModel editTourLogViewModel;
 
+
     private ViewFactory() {
         publisher = new Publisher();
         tourLogRepository = new TourLogDatabaseRepository();
@@ -45,12 +46,12 @@ public class ViewFactory {
         menuViewModel = new MenuViewModel();
         tourViewModel = new TourViewModel(publisher, tourListService, tourLogListService);
         tabViewModel = new TabViewModel(publisher);
-        tourLogsViewModel = new TourLogsViewModel(publisher, tourLogListService);
+        tourLogsViewModel = new TourLogsViewModel(publisher, tourLogListService, tourListService);
         addTourViewModel = new AddTourViewModel(publisher, tourListService);
         addTourLogViewModel = new AddTourLogViewModel(publisher, tourLogListService, tourListService);
         editTourViewModel = new EditTourViewModel(publisher, tourListService);
         editTourLogViewModel = new EditTourLogViewModel(publisher, tourLogListService, tourListService);
-        }
+    }
 
 
     public static ViewFactory getInstance() {

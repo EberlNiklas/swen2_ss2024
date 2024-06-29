@@ -1,16 +1,13 @@
 package com.example.swen2_ss2024.viewmodel;
 
-import com.example.swen2_ss2024.ViewFactory;
+import com.example.swen2_ss2024.entity.Tours;
 import com.example.swen2_ss2024.event.Event;
 import com.example.swen2_ss2024.event.ObjectSubscriber;
 import com.example.swen2_ss2024.event.Publisher;
 import com.example.swen2_ss2024.entity.TourLog;
 import com.example.swen2_ss2024.service.NewTourLogService;
-import com.example.swen2_ss2024.service.NewTourService;
 import com.example.swen2_ss2024.service.TourListService;
 import com.example.swen2_ss2024.service.TourLogListService;
-import com.example.swen2_ss2024.view.EditTourLogView;
-import com.example.swen2_ss2024.view.EditTourView;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -23,17 +20,21 @@ public class TourLogsViewModel implements ObjectSubscriber {
     private final ObservableList<TourLog> tourLogList = FXCollections.observableArrayList();
     private final IntegerProperty index = new SimpleIntegerProperty();
     private TourLogListService tourLogListService;
+
+    private TourListService tourListService;
     private Publisher publisher;
 
     private NewTourLogService newTourLogService;
 
-    public TourLogsViewModel(Publisher publisher, TourLogListService tourLogListService) {
+    public TourLogsViewModel(Publisher publisher, TourLogListService tourLogListService, TourListService tourListService) {
         this.publisher = publisher;
         this.tourLogListService = tourLogListService;
         this.newTourLogService = new NewTourLogService();
+        this.tourListService = tourListService;
         // Subscribe this ViewModel to the TOUR_LOG_ADDED event
-        this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateTourLogs);
+        this.publisher.subscribe(Event.TOUR_SELECTED, (ObjectSubscriber) this::updateTourLogs);
         this.publisher.subscribe(Event.TOUR_LOG_ADDED, (ObjectSubscriber) this::addToTourLogs);
+        this.publisher.subscribe(Event.SELECTED_TOUR_CHANGED, (ObjectSubscriber) this::updateTourLogs);
 
         loadTourLogs();
 
@@ -68,7 +69,7 @@ public class TourLogsViewModel implements ObjectSubscriber {
         int tourLogIndex = index.get();
         if (tourLogIndex >= 0 && tourLogIndex < tourLogList.size()) {
             TourLog tourLog = tourLogList.get(tourLogIndex);
-            if (tourLogListService.deleteTourById(tourLog.getId())) {
+            if (tourLogListService.delete(tourLog.getId())) {
                 tourLogList.remove(tourLogIndex);
             }
         }

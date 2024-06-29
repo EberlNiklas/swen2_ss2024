@@ -4,10 +4,15 @@ import com.example.swen2_ss2024.entity.TourLog;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.*;
 import com.example.swen2_ss2024.entity.Tours;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+
 public class TourLogDatabaseRepository implements TourLogRepository {
+
+    private static final Logger logger = LogManager.getLogger(TourLogDatabaseRepository.class);
 
     private final EntityManagerFactory entityManagerFactory;
 
@@ -17,6 +22,7 @@ public class TourLogDatabaseRepository implements TourLogRepository {
 
     @Override
     public List<TourLog> findAll() {
+        logger.debug("Attempt to find all tour logs");
         CriteriaBuilder criteriaBuilder = entityManagerFactory.getCriteriaBuilder();
         CriteriaQuery<TourLog> criteriaQuery = criteriaBuilder.createQuery(TourLog.class);
         Root<TourLog> root = criteriaQuery.from(TourLog.class);
@@ -24,28 +30,28 @@ public class TourLogDatabaseRepository implements TourLogRepository {
 
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             List<TourLog> tourLogs = entityManager.createQuery(all).getResultList();
+            logger.info("There are {} tour logs", tourLogs.size());
             return tourLogs;
         } catch (Exception e) {
+            logger.error("Error finding all tour logs", e);
             throw e;
         }
     }
 
     @Override
     public TourLog save(TourLog entity) {
+        logger.debug("Attempt to create tour log: {}", entity);
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
-            try {
-                transaction.begin();
-                entityManager.persist(entity);
-                transaction.commit();
-                return entity;
-            } catch (Exception e) {
-                if (transaction.isActive()) {
-                    transaction.rollback();
-                }
-                throw e;
-            }
+            transaction.begin();
+            entityManager.persist(entity);
+            transaction.commit();
+            logger.info("Created tour log: {}", entity);
+        } catch (Exception e){
+            logger.error("Error creating tour log: {}", entity);
+            throw e;
         }
+        return entity;
     }
 
     @Override

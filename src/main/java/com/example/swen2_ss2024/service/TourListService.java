@@ -74,4 +74,8 @@ public class TourListService {
     public Tours getTourByName(String name) {
         return tourRepository.findByName(name).orElse(null);
     }
+
+    public void updateTour(Tours tour){
+        tourRepository.modify(tour);
+    }
 }

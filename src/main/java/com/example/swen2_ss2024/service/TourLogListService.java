@@ -4,10 +4,7 @@ import com.example.swen2_ss2024.entity.TourLog;
 import com.example.swen2_ss2024.repository.TourLogRepository;
 import com.example.swen2_ss2024.repository.TourRepository;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class TourLogListService {
 
@@ -34,7 +31,7 @@ public class TourLogListService {
         tourLogRepository.save(tourLog);
     }
 
-    public boolean deleteTourById(Long tourLogId) {
+    public boolean delete(Long tourLogId) {
         TourLog tourLog = tourLogRepository.findById(tourLogId);
         if (tourLog != null) {
             tourLogRepository.deleteTourLog(tourLog);
@@ -43,7 +40,7 @@ public class TourLogListService {
         return false;
     }
 
-    public void modifyTourLog(TourLog newTourLog) {
+    public void editTourLog(TourLog newTourLog) {
         tourLogRepository.modify(newTourLog);
     }
 
