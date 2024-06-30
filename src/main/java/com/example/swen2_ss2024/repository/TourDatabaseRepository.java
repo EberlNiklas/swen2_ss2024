@@ -168,7 +168,7 @@ public class TourDatabaseRepository implements TourRepository {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
-            entity.setDistance(String.valueOf(distance));
+            entity.setDistance(distance);
             entityManager.merge(entity);
             transaction.commit();
             logger.info("Saved tour distance for tour: {}", entity.getName());
@@ -183,7 +183,7 @@ public class TourDatabaseRepository implements TourRepository {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
-            entity.setEstimatedTime(String.valueOf(duration));
+            entity.setEstimatedTime(duration);
             entityManager.merge(entity);
             transaction.commit();
             logger.info("Saved tour duration for tour: {}", entity.getName());

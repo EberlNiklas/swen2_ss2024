@@ -37,11 +37,11 @@ public class Tours {
 
     @Column(name = "distance")
     @com.fasterxml.jackson.annotation.JsonProperty("distance")
-    private String distance;
+    private double distance;
 
     @Column(name = "estimated_time")
     @com.fasterxml.jackson.annotation.JsonProperty("estimated_time")
-    private String estimatedTime;
+    private double estimatedTime;
 
     @Column(name = "route_information")
     @JsonProperty("imagePath")
@@ -63,7 +63,7 @@ public class Tours {
 
     }
 
-    public Tours(String name, String description, String from, String to, String transportType, String distance, String estimatedTime, String imagePath) {
+    public Tours(String name, String description, String from, String to, String transportType, double distance, double estimatedTime, String imagePath) {
         this.name = name;
         this.description = description;
         this.from = from;
@@ -130,19 +130,19 @@ public class Tours {
         this.transportType = transportType;
     }
 
-    public String getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
-    public String getEstimatedTime() {
+    public double getEstimatedTime() {
         return estimatedTime;
     }
 
-    public void setEstimatedTime(String estimatedTime) {
+    public void setEstimatedTime(double estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
 

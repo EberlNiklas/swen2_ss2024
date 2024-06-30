@@ -55,8 +55,8 @@ public class AddTourView implements Initializable{
         fromField.textProperty().bindBidirectional(viewModel.fromProperty());
         toField.textProperty().bindBidirectional(viewModel.toProperty());
         transportTypeField.textProperty().bindBidirectional(viewModel.transportTypeProperty());
-        distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
-        estimatedTimeField.textProperty().bindBidirectional(viewModel.estimatedTimeProperty());
+        distanceField.textProperty().bind(viewModel.distanceProperty().asString());
+        estimatedTimeField.textProperty().bind(viewModel.estimatedTimeProperty().asString());
         imagePathField.textProperty().bindBidirectional(viewModel.imagePathProperty());
 
         // Binding of button disable property

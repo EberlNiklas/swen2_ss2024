@@ -1,6 +1,8 @@
 package com.example.swen2_ss2024.entity;
 
 import jakarta.persistence.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -23,6 +25,14 @@ public class TourLog {
 
     @Column(name = "info")
     private String info;
+
+    @Column(name = "distance")
+    private String distance;
+
+    @Column(name = "duration")
+    private String duration;
+
+
 
     @ManyToOne
     @JoinColumn(name = "tour_id", nullable = false)
@@ -88,12 +98,12 @@ public class TourLog {
     }
 
     // Transient properties for distance and duration
-    public String getDistance() {
-        return tour != null ? tour.getDistance() : null;
+    public void getDistance(String distance) {
+       this.distance = distance;
     }
 
-    public String getDuration() {
-        return tour != null ? tour.getEstimatedTime() : null;
+    public void getDuration(String duration) {
+        this.duration = duration;
     }
 
     public StringProperty nameProperty() {
@@ -113,11 +123,11 @@ public class TourLog {
     }
 
     public StringProperty distanceProperty() {
-        return new SimpleStringProperty(getDistance());
+        return new SimpleStringProperty(distance);
     }
 
     public StringProperty durationProperty() {
-        return new SimpleStringProperty(getDuration());
+        return new SimpleStringProperty(duration);
     }
 }
 

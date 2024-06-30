@@ -48,8 +48,8 @@ public class EditTourView implements Initializable {
         fromField.textProperty().bindBidirectional(editTourViewModel.fromProperty());
         toField.textProperty().bindBidirectional(editTourViewModel.toProperty());
         transportTypeField.textProperty().bindBidirectional(editTourViewModel.transportTypeProperty());
-        distanceField.textProperty().bindBidirectional(editTourViewModel.distanceProperty());
-        estimatedTimeField.textProperty().bindBidirectional(editTourViewModel.estimatedTimeProperty());
+        distanceField.textProperty().bind(editTourViewModel.distanceProperty().asString());
+        estimatedTimeField.textProperty().bind(editTourViewModel.estimatedTimeProperty().asString());
         imagePathField.textProperty().bindBidirectional(editTourViewModel.imagePathProperty());
         editTourButton.disableProperty().bind(editTourViewModel.editTourButtonDisabledProperty());
     }
