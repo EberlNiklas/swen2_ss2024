@@ -43,7 +43,7 @@ public class ViewFactory {
         tourListService = new TourListService(tourRepository);
         tourLogListService = new TourLogListService(tourLogRepository, tourRepository);
         searchViewModel = new SearchViewModel(publisher, tourListService); // Pass tourListService here
-        menuViewModel = new MenuViewModel();
+        menuViewModel = new MenuViewModel(tourListService, tourLogListService);
         tourViewModel = new TourViewModel(publisher, tourListService, tourLogListService);
         tabViewModel = new TabViewModel(publisher);
         tourLogsViewModel = new TourLogsViewModel(publisher, tourLogListService, tourListService);

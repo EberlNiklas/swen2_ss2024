@@ -10,7 +10,7 @@
             <Menu text="File">
                 <items>
                     <MenuItem text="Open" />
-                    <MenuItem text="Save" />
+                    <MenuItem fx:id="menuItemSave" text="Save" />
                     <MenuItem text="Delete" />
                 </items>
             </Menu>

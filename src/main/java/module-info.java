@@ -8,6 +8,9 @@ module com.example.swen2_ss2024 {
     requires org.apache.logging.log4j;
     requires com.google.gson;
     requires java.desktop;
+    requires kernel;
+    requires layout;
+    requires io;
 
     opens com.example.swen2_ss2024.entity to org.hibernate.orm.core;
     opens com.example.swen2_ss2024 to javafx.fxml;

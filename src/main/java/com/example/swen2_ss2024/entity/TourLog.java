@@ -100,12 +100,12 @@ public class TourLog {
     }
 
     // Transient properties for distance and duration
-    public void getDistance(String distance) {
-       this.distance = distance;
+    public String getDistance() {
+       return distance;
     }
 
-    public void getDuration(String duration) {
-        this.duration = duration;
+    public String getDuration() {
+        return duration;
     }
 
     public void setDistance(String distance) {
