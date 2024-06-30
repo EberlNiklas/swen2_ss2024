@@ -34,54 +34,84 @@ public class AddTourLogViewModelTest {
     @Test
     public void testInitialState() {
         assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled initially.");
-    }
-
-    @Test
-    public void testAddTourLogButtonDisabledWhenFieldsAreEmpty() {
-        viewModel.nameProperty().set("");
-        viewModel.dateProperty().set("");
-        viewModel.ratingProperty().set("");
-        viewModel.infoProperty().set("");
-        assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled when fields are empty.");
+        assertEquals("", viewModel.nameProperty().get());
+        assertEquals("", viewModel.dateProperty().get());
+        assertEquals("", viewModel.ratingProperty().get());
+        assertEquals("", viewModel.infoProperty().get());
+        assertEquals("", viewModel.distanceProperty().get());
+        assertEquals("", viewModel.durationProperty().get());
     }
 
     @Test
     public void testAddTourLogButtonEnabledWhenFieldsAreNotEmpty() {
-        viewModel.nameProperty().set("Log Name");
-        viewModel.dateProperty().set("2024-06-30");
+        viewModel.nameProperty().set("Tour Log Name");
+        viewModel.dateProperty().set("2023-06-30");
         viewModel.ratingProperty().set("5");
-        viewModel.infoProperty().set("Info about the tour log");
+        viewModel.infoProperty().set("Good tour");
+        viewModel.distanceProperty().set("10 km");
+        viewModel.durationProperty().set("1 hour");
+
         assertFalse(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be enabled when all fields are filled.");
     }
 
     @Test
     public void testAddTourLog() {
-        Tours mockTour = new Tours();
+        Tours selectedTour = new Tours();
         when(tourListService.selected()).thenReturn(true);
-        when(tourListService.getSelectedTour()).thenReturn(mockTour);
+        when(tourListService.getSelectedTour()).thenReturn(selectedTour);
 
-        viewModel.nameProperty().set("Log Name");
-        viewModel.dateProperty().set("2024-06-30");
+        viewModel.nameProperty().set("Tour Log Name");
+        viewModel.dateProperty().set("2023-06-30");
         viewModel.ratingProperty().set("5");
-        viewModel.infoProperty().set("Info about the tour log");
+        viewModel.infoProperty().set("Good tour");
+        viewModel.distanceProperty().set("10 km");
+        viewModel.durationProperty().set("1 hour");
 
         viewModel.addTourLog();
 
-        ArgumentCaptor<TourLog> tourLogCaptor = ArgumentCaptor.forClass(TourLog.class);
-        verify(tourLogListService).addTourLog(tourLogCaptor.capture());
-        verify(publisher).publish(eq(Event.TOUR_LOG_ADDED), tourLogCaptor.capture());
+        ArgumentCaptor<TourLog> captor = ArgumentCaptor.forClass(TourLog.class);
+        verify(tourLogListService).addTourLog(captor.capture());
+        TourLog capturedTourLog = captor.getValue();
 
-        TourLog capturedTourLog = tourLogCaptor.getValue();
-        assertEquals("Log Name", capturedTourLog.getName());
-        assertEquals("2024-06-30", capturedTourLog.getDate());
+        assertEquals("Tour Log Name", capturedTourLog.getName());
+        assertEquals("2023-06-30", capturedTourLog.getDate());
         assertEquals("5", capturedTourLog.getRating());
-        assertEquals("Info about the tour log", capturedTourLog.getInfo());
-        assertEquals(mockTour, capturedTourLog.getTour());
+        assertEquals("Good tour", capturedTourLog.getInfo());
+        assertEquals("10 km", capturedTourLog.getDistance());
+        assertEquals("1 hour", capturedTourLog.getDuration());
+        assertEquals(selectedTour, capturedTourLog.getTour());
 
-        // Verify fields are cleared after adding
-        assertTrue(viewModel.nameProperty().get().isEmpty());
-        assertTrue(viewModel.dateProperty().get().isEmpty());
-        assertTrue(viewModel.ratingProperty().get().isEmpty());
-        assertTrue(viewModel.infoProperty().get().isEmpty());
+        verify(publisher).publish(Event.TOUR_LOG_ADDED, capturedTourLog);
+
+        assertEquals("", viewModel.nameProperty().get());
+        assertEquals("", viewModel.dateProperty().get());
+        assertEquals("", viewModel.ratingProperty().get());
+        assertEquals("", viewModel.infoProperty().get());
+        assertEquals("", viewModel.distanceProperty().get());
+        assertEquals("", viewModel.durationProperty().get());
+        assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled after adding a log.");
+    }
+
+    @Test
+    public void testAddTourLogButtonDisabledWhenFieldsAreEmpty() {
+        assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled when fields are empty.");
+
+        viewModel.nameProperty().set("Tour Log Name");
+        assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled when fields are partially filled.");
+
+        viewModel.dateProperty().set("2023-06-30");
+        assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled when fields are partially filled.");
+
+        viewModel.ratingProperty().set("5");
+        assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled when fields are partially filled.");
+
+        viewModel.infoProperty().set("Good tour");
+        assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled when fields are partially filled.");
+
+        viewModel.distanceProperty().set("10 km");
+        assertTrue(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be disabled when fields are partially filled.");
+
+        viewModel.durationProperty().set("1 hour");
+        assertFalse(viewModel.addTourLogButtonDisabledProperty().get(), "Add Tour Log button should be enabled when all fields are filled.");
     }
 }
