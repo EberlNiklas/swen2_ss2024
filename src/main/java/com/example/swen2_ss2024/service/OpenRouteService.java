@@ -1,20 +1,28 @@
 package com.example.swen2_ss2024.service;
 
 import com.example.swen2_ss2024.entity.RouteInfo;
+import com.example.swen2_ss2024.entity.Tours;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Properties;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.util.UUID;
 
 
 public class OpenRouteService {
@@ -99,5 +107,41 @@ public class OpenRouteService {
     public String getRouteFromCoordinates(String fromLatitude, String fromLongitude, String toLatitude, String toLongitude, String transport) throws Exception{
         String url = String.format("%s%s?api_key=%s&start=%s,%s&end=%s,%s", ORS_URL, transport, KEY_API, fromLongitude, fromLatitude, toLongitude, toLatitude);
         return createHttpRequest(url);
+    }
+
+    public BufferedImage fetchMapForTour(Tours tour, int zoom, int gridSize) throws IOException {
+        double[] originCoords = null;
+        try {
+            originCoords = getCoordinates(tour.getFrom());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        double[] destinationCoords = null;
+        try {
+            destinationCoords = getCoordinates(tour.getTo());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        MapAssembler mapAssembler = new MapAssembler();
+        double centerLat = (originCoords[0] + destinationCoords[0]) / 2;
+        double centerLon = (originCoords[1] + destinationCoords[1]) / 2;
+        BufferedImage mapImage = mapAssembler.assembleMap(centerLat, centerLon, zoom, gridSize);
+
+        return mapImage;
+    }
+
+    public String saveImage(BufferedImage image) throws IOException {
+        String randomFileName = UUID.randomUUID().toString() + ".png";
+        Path destinationDirectory = Path.of("src/main/resources/Images");
+        Path destinationPath = destinationDirectory.resolve(randomFileName);
+
+        // Check if the directory exists, if not create it
+        if (!Files.exists(destinationDirectory)) {
+            Files.createDirectories(destinationDirectory);
+        }
+
+        ImageIO.write(image, "png", destinationPath.toFile());
+        return destinationPath.toString();
     }
 }

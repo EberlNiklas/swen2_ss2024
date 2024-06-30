@@ -13,6 +13,8 @@ import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class AddTourViewModel {
@@ -57,12 +59,13 @@ public class AddTourViewModel {
     private void updateAddTourButtonDisabled() {
         boolean anyFieldEmpty = name.get().isEmpty() || description.get().isEmpty() ||
                 from.get().isEmpty() || to.get().isEmpty() ||
-                transportType.get().isEmpty() || imagePath.get().isEmpty();
+                transportType.get().isEmpty();
 
         addTourButtonDisabled.set(anyFieldEmpty);
     }
 
     public void addTour() {
+        try{
         if (!addTourButtonDisabled.get()) {
             Tours tour = new Tours(
                     name.get(), description.get(), from.get(), to.get(),
@@ -70,6 +73,7 @@ public class AddTourViewModel {
             );
 
             getTourAttributesFromAPI(tour);
+            fetchAndSetMapImage(tour);
             tourListService.addTour(tour);
             publisher.publish(Event.TOUR_ADDED, tour);
 
@@ -83,6 +87,9 @@ public class AddTourViewModel {
             estimatedTime.set(0);
             imagePath.set("");
 
+        }
+        } catch (Exception e){
+            logger.error("Failed to add tour" + e.getMessage());
         }
     }
 
@@ -117,6 +124,17 @@ public class AddTourViewModel {
             }
         } catch (Exception e){
             logger.error("You encountered a problem!", e);
+        }
+    }
+
+    public void fetchAndSetMapImage(Tours tour) throws IOException {
+        try {
+            BufferedImage mapImage = routeService.fetchMapForTour(tour, 16, 3); // Adjusted zoom level
+            String imageURL = routeService.saveImage(mapImage);
+            imagePath.set(imageURL);
+            tour.setImagePath(imageURL);
+        } catch (IOException e) {
+            logger.error("Failed to fetch map image: " + e.getMessage());
         }
     }
 
