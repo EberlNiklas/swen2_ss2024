@@ -79,7 +79,7 @@ public class TourLogDatabaseRepository implements TourLogRepository {
             Root<TourLog> root = criteriaQuery.from(TourLog.class);
             criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("tour").get("name"), tourName));
             List<TourLog> tourLogs = entityManager.createQuery(criteriaQuery).getResultList();
-            logger.info("Found {} tour logs for tour name: {}", tourName);
+            logger.info("Found {} tour logs for tour name: {}", tourLogs.size(), tourName);
             return tourLogs;
         } catch (Exception e) {
             logger.error("Error finding tour logs by tour name: {}", tourName, e);
