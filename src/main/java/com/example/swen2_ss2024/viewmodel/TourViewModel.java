@@ -197,4 +197,25 @@ public class TourViewModel implements ObjectSubscriber {
     public Publisher getPublisher() {
         return publisher;
     }
+
+
+    public void duplicateTour(Tours tour) {
+        Tours duplicateTour = new Tours();
+        duplicateTour.setName(tour.getName() + " Copy");
+        duplicateTour.setDescription(tour.getDescription());
+        duplicateTour.setFrom(tour.getFrom());
+        duplicateTour.setTo(tour.getTo());
+        duplicateTour.setTransportType(tour.getTransportType());
+        duplicateTour.setDistance(tour.getDistance());
+        duplicateTour.setEstimatedTime(tour.getEstimatedTime());
+        duplicateTour.setImagePath(tour.getImagePath());
+        duplicateTour.setTourImage(tour.getTourImage());
+
+        // Saves the duplicated tour using the service
+        tourListService.addTour(duplicateTour);
+
+        // Optionally, adds the duplicate to the tour list directly and select it
+        tourList.add(duplicateTour);
+        index.set(tourList.size() - 1); // Selects the newly added duplicate
+    }
 }

@@ -35,7 +35,7 @@ public class TourView implements ObjectSubscriber, Initializable {
         tourViewModel.getPublisher().subscribe(Event.RESET_SEARCH, this);
     }
 
-    @Override
+    @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonAdd.setOnAction(e -> tourViewModel.onAdd());
         buttonDelete.setOnAction(e -> tourViewModel.delete());
@@ -64,7 +64,18 @@ public class TourView implements ObjectSubscriber, Initializable {
                 return null;
             }
         }));
+
+        // Add double-click event listener
+        tourList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Tours selectedTour = tourList.getSelectionModel().getSelectedItem();
+                if (selectedTour != null) {
+                    tourViewModel.duplicateTour(selectedTour);
+                }
+            }
+        });
     }
+
 
     @Override
     public void notify(Object message) {

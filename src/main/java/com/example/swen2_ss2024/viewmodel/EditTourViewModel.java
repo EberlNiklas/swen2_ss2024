@@ -48,7 +48,6 @@ public class EditTourViewModel {
         transportType.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
         distance.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
         estimatedTime.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
-        imagePath.addListener(((observable, oldValue, newValue) -> updateEditTourButtonDisabled()));
 
         updateEditTourButtonDisabled();
     }
@@ -56,10 +55,8 @@ public class EditTourViewModel {
     private void updateEditTourButtonDisabled() {
         boolean anyFieldEmpty = name.get().isEmpty() || description.get().isEmpty() ||
                 from.get().isEmpty() || to.get().isEmpty() ||
-                transportType.get().isEmpty() || imagePath.get().isEmpty();
+                transportType.get().isEmpty();
 
-        System.out.println("Fields Empty: " + anyFieldEmpty); // Debug output
-        System.out.println("Route Information: " + imagePath.get()); // Additional debug for image path
         editTourButtonDisabled.set(anyFieldEmpty);
     }
 
