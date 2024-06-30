@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import javafx.scene.image.Image;
 
 @Entity
 @Table(name = "t_tours")

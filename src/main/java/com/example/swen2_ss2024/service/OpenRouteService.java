@@ -133,7 +133,7 @@ public class OpenRouteService {
 
     public String saveImage(BufferedImage image) throws IOException {
         String randomFileName = UUID.randomUUID().toString() + ".png";
-        Path destinationDirectory = Path.of("src/main/resources/Images");
+        Path destinationDirectory = Path.of("C:\\Users\\alexa\\IdeaProjects\\swen2_ss2024\\src\\main\\resources\\Images");
         Path destinationPath = destinationDirectory.resolve(randomFileName);
 
         // Check if the directory exists, if not create it
