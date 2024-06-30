@@ -11,6 +11,8 @@ import javafx.beans.property.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -77,27 +79,32 @@ public class EditTourViewModel {
     }
 
     public void editTour() {
-        if (currentTour == null) {
-            System.out.println("No tour selected to edit.");
-            return;
+        try {
+            if (currentTour == null) {
+                System.out.println("No tour selected to edit.");
+                return;
+            }
+
+            Tours updatedTour = new Tours(
+                    name.get(),
+                    description.get(),
+                    from.get(),
+                    to.get(),
+                    transportType.get(),
+                    distance.get(),
+                    estimatedTime.get(),
+                    imagePath.get()
+            );
+            updatedTour.setId(currentTour.getId());
+
+            getTourAttributesFromAPI(updatedTour);
+            fetchAndSetMapImage(updatedTour);
+            tourListService.updateTour(updatedTour);
+            publisher.publish(Event.TOUR_UPDATED, updatedTour);
+            System.out.println("Tour updated: " + updatedTour.getName());
+        }catch (Exception e) {
+            logger.error("Failed to edit tour" + e.getMessage());
         }
-
-        Tours updatedTour = new Tours(
-                name.get(),
-                description.get(),
-                from.get(),
-                to.get(),
-                transportType.get(),
-                distance.get(),
-                estimatedTime.get(),
-                imagePath.get()
-        );
-        updatedTour.setId(currentTour.getId());
-
-        getTourAttributesFromAPI(updatedTour);
-        tourListService.updateTour(updatedTour);
-        publisher.publish(Event.TOUR_UPDATED, updatedTour);
-        System.out.println("Tour updated: " + updatedTour.getName());
     }
 
     private String transportTypeConverter(String transportType){
@@ -131,6 +138,17 @@ public class EditTourViewModel {
             }
         } catch (Exception e){
             logger.error("You encountered a problem!", e);
+        }
+    }
+
+    public void fetchAndSetMapImage(Tours tour) throws IOException {
+        try {
+            BufferedImage mapImage = routeService.fetchMapForTour(tour, 16, 3); // Adjusted zoom level
+            String imageURL = routeService.saveImage(mapImage);
+            imagePath.set(imageURL);
+            tour.setImagePath(imageURL);
+        } catch (IOException e) {
+            logger.error("Failed to fetch map image: " + e.getMessage());
         }
     }
 

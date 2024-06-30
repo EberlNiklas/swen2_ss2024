@@ -60,10 +60,6 @@ public class EditTourView implements Initializable {
 
     @FXML
     private void handleEditTour() {
-        if (imagePathField.getText() == null || imagePathField.getText().isEmpty()) {
-            System.out.println("Image path must not be empty");
-            return;
-        }
         editTourViewModel.editTour();
     }
 }

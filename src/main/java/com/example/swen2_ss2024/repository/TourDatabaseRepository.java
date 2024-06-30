@@ -133,11 +133,11 @@ public class TourDatabaseRepository implements TourRepository {
                     existingTour.setEstimatedTime(tour.getEstimatedTime());
                     existingTour.setImagePath(tour.getImagePath());
                     entityManager.merge(existingTour);
-                    transaction.commit();
                     logger.info("Edited tour: {}", tour);
                 }else {
                     logger.warn("No tour found: {}", tour.getId());
                 }
+                transaction.commit();
             } catch (Exception e) {
                 if (transaction.isActive()) {
                     transaction.rollback();
