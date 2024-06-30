@@ -40,11 +40,13 @@ public class TourLog {
 
     public TourLog() {}
 
-    public TourLog(String name, String date, String rating, String info) {
+    public TourLog(String name, String date, String rating, String info, String distance, String duration) {
         this.name = name;
         this.date = date;
         this.rating = rating;
         this.info = info;
+        this.distance = distance;
+        this.duration = duration;
 
     }
 
@@ -103,6 +105,14 @@ public class TourLog {
     }
 
     public void getDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

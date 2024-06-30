@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,9 +25,8 @@ public class EditTourLogView implements Initializable {
     @FXML private TextField dateField;
     @FXML private TextField durationField;
     @FXML private TextField distanceField;
-    @FXML private TextField commentField;
     @FXML private TextField ratingField;
-    @FXML private TextField difficultyField;
+    @FXML private TextField infoField;
     @FXML private Button editTourLogButton;
 
     public EditTourLogView(EditTourLogViewModel viewModel) {  // Accept viewModel as a constructor parameter
@@ -40,9 +40,8 @@ public class EditTourLogView implements Initializable {
         dateField.textProperty().bindBidirectional(viewModel.dateProperty());
         durationField.textProperty().bindBidirectional(viewModel.durationProperty());
         distanceField.textProperty().bindBidirectional(viewModel.distanceProperty());
-        commentField.textProperty().bindBidirectional(viewModel.commentProperty());
         ratingField.textProperty().bindBidirectional(viewModel.ratingProperty());
-        difficultyField.textProperty().bindBidirectional(viewModel.difficultyProperty());
+        infoField.textProperty().bindBidirectional(viewModel.infoProperty());
 
         editTourLogButton.setOnAction(e -> handleEditTourLog());
 
@@ -59,9 +58,8 @@ public class EditTourLogView implements Initializable {
         dateField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
         durationField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
         distanceField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
-        commentField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
         ratingField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
-        difficultyField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
+        infoField.addEventHandler(KeyEvent.KEY_PRESSED, enterKeyHandler);
 
     }
 

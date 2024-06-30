@@ -25,6 +25,8 @@ public class AddTourLogViewModel implements ObjectSubscriber {
     private final StringProperty date = new SimpleStringProperty("");
     private final StringProperty info = new SimpleStringProperty("");
     private final StringProperty rating = new SimpleStringProperty("");
+    private final StringProperty distance = new SimpleStringProperty("");
+    private final StringProperty duration = new SimpleStringProperty("");
 
     private final BooleanProperty addTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
@@ -38,6 +40,8 @@ public class AddTourLogViewModel implements ObjectSubscriber {
         date.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         rating.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         info.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        distance.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
+        duration.addListener((observable, oldValue, newValue) -> updateAddTourButtonDisabled());
         // Ensure initial state checks
         updateAddTourButtonDisabled();
     }
@@ -46,7 +50,7 @@ public class AddTourLogViewModel implements ObjectSubscriber {
 
     private void updateAddTourButtonDisabled() {
         boolean anyFieldEmpty = name.get().isEmpty() || date.get().isEmpty() ||
-                rating.get().isEmpty() || info.get().isEmpty();
+                rating.get().isEmpty() || info.get().isEmpty() || distance.get().isEmpty() || duration.get().isEmpty();
 
         addTourLogButtonDisabled.set(anyFieldEmpty);
     }
@@ -55,7 +59,7 @@ public class AddTourLogViewModel implements ObjectSubscriber {
     public void addTourLog() {
         if (!addTourLogButtonDisabled.get()) {
             if (tourListService.selected()) {
-                TourLog tourLog = new TourLog(name.get(), date.get(), rating.get(), info.get());
+                TourLog tourLog = new TourLog(name.get(), date.get(), rating.get(), info.get(), distance.get(), duration.get());
                 tourLog.setTour(tourListService.getSelectedTour());
                 tourLogListService.addTourLog(tourLog);
                 publisher.publish(Event.TOUR_LOG_ADDED, tourLog);
@@ -66,7 +70,8 @@ public class AddTourLogViewModel implements ObjectSubscriber {
                 date.set("");
                 rating.set("");
                 info.set("");
-
+                distance.set("");
+                duration.set("");
 
             }
         }
@@ -89,6 +94,13 @@ public class AddTourLogViewModel implements ObjectSubscriber {
 
     public StringProperty ratingProperty() {
         return rating;
+    }
+
+    public StringProperty distanceProperty() {
+        return distance;
+    }
+    public StringProperty durationProperty() {
+        return duration;
     }
 
     public BooleanProperty addTourLogButtonDisabledProperty() {

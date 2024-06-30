@@ -10,11 +10,10 @@
 
     <TextField fx:id="nameField" HBox.hgrow="ALWAYS" promptText="Name" />
     <TextField fx:id="dateField" HBox.hgrow="ALWAYS" promptText="Date" />
+    <TextField fx:id="ratingField" HBox.hgrow="ALWAYS" promptText="Rating" />
+    <TextField fx:id="infoField" HBox.hgrow="ALWAYS" promptText="Info" />
     <TextField fx:id="durationField" HBox.hgrow="ALWAYS" promptText="Duration" />
     <TextField fx:id="distanceField" HBox.hgrow="ALWAYS" promptText="Distance" />
-    <TextField fx:id="difficultyField" HBox.hgrow="ALWAYS" promptText="Difficulty" />
-    <TextField fx:id="commentField" HBox.hgrow="ALWAYS" promptText="Comment" />
-    <TextField fx:id="ratingField" HBox.hgrow="ALWAYS" promptText="Rating" />
     <Button fx:id="editTourLogButton" onAction="#handleEditTourLog" text="Add" />
 
 

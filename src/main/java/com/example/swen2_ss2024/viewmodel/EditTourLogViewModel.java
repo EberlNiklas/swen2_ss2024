@@ -27,6 +27,8 @@ public class EditTourLogViewModel {
     private final StringProperty comment = new SimpleStringProperty("");
     private final StringProperty rating = new SimpleStringProperty("");
     private final StringProperty difficulty = new SimpleStringProperty("");
+
+    private final StringProperty info = new SimpleStringProperty("");
     private final BooleanProperty modifyTourLogButtonDisabled = new SimpleBooleanProperty(true);
 
     // Private constructor
@@ -58,7 +60,7 @@ public class EditTourLogViewModel {
             if(tourLogListService.selected()){
                 TourLog currentlySelected = tourLogListService.getSelectedTourLog();
                 Long id = currentlySelected.getId();
-                TourLog newTourLog = new TourLog(name.get(), date.get(), duration.get(), distance.get());
+                TourLog newTourLog = new TourLog(name.get(), date.get(), rating.get(), info.get(), distance.get(), duration.get());
                 newTourLog.setId(id);
                 tourLogListService.editTourLog(newTourLog);
 
@@ -71,7 +73,6 @@ public class EditTourLogViewModel {
     public StringProperty dateProperty() { return date; }
     public StringProperty durationProperty() { return duration; }
     public StringProperty distanceProperty() { return distance; }
-    public StringProperty commentProperty() { return comment; }
     public StringProperty ratingProperty() { return rating; }
-    public StringProperty difficultyProperty() { return difficulty; }
+    public StringProperty infoProperty() { return info; }
 }
